@@ -26,8 +26,8 @@ class Evento(models.Model):
     img1 = models.ImageField(blank=True, null=True)
     img2 = models.ImageField(blank=True, null=True)
     img3 = models.ImageField(blank=True, null=True)
-    apresentecao = models.OneToOneField(Apresentacao, null=True, blank=True)
-    programacao = models.OneToOneField(Programacao, null=True, blank=True)
+    apresentecao = models.OneToOneField(Apresentacao, null=True, blank=True, on_delete=models.CASCADE)
+    programacao = models.OneToOneField(Programacao, null=True, blank=True, on_delete=models.CASCADE)
     is_valid = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
