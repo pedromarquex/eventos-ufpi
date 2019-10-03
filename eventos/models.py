@@ -1,22 +1,11 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from users.models import Organizador
+from core.models import Organizador
 
 
 class Apresentacao(models.Model):
-    realizador = models.CharField(max_length=150)
+    realizacao = models.CharField(max_length=150)
     texto_apresentacao = models.TextField(max_length=300)
-
-
-class Programacao(models.Model):
-    dia = models.IntegerField()
-
-
-class MicroEvento(models.Model):
-    nome = models.CharField(max_length=150)
-    horario = models.TimeField()
-    local = models.CharField(max_length=300)
-    programacao = models.ForeignKey(Programacao, on_delete=models.CASCADE)
 
 
 class Evento(models.Model):
@@ -27,8 +16,11 @@ class Evento(models.Model):
     img2 = models.ImageField(blank=True, null=True)
     img3 = models.ImageField(blank=True, null=True)
     apresentecao = models.OneToOneField(Apresentacao, null=True, blank=True, on_delete=models.CASCADE)
-    programacao = models.OneToOneField(Programacao, null=True, blank=True, on_delete=models.CASCADE)
+
     is_valid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.nome
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -38,16 +30,46 @@ class Evento(models.Model):
         super(Evento, self).save(*args, **kwargs)
 
 
+class Programacao(models.Model):
+    dia = models.IntegerField()
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "dia " + str(self.dia)
+
+
+class MicroEvento(models.Model):
+    nome = models.CharField(max_length=150)
+    horario = models.TimeField()
+    local = models.CharField(max_length=300)
+    programacao = models.ForeignKey(Programacao, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
+
+
 class Patrocinador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
 
 
 class Realizador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
 
 
 class Apoiador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome

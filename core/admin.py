@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Administrador, Organizador
 
-# Register your models here.
+admin.site.register(Administrador)
+admin.site.register(Organizador)
