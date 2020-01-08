@@ -1,0 +1,43 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#login-box {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+#login-button {
+    margin-top: 15px;
+    width: 300px;
+}
+
+#login-submit-control {
+    padding-bottom: 15px;
+}
+
+#navbar-container {
+    max-width: 950px;
+}
+
+#main-container {
+    margin-top: 40px;
+    max-width: 950px;
+}
+
+.column {
+    margin-bottom: 30px;
+}
+
+.card{
+    border-radius: 6px;
+}
+
+#event-info {
+    padding-left: 60px;
+}
+
+a.nav-item:focus {
+    outline: 0;
+    color: brown;
+}

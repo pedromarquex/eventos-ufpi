@@ -4,6 +4,7 @@
 
 # Enviroment
 /venv
+eventos_ufpi/.env
 
 # Pycharm
 .idea/

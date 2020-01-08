@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% block title %} Login | Eventos UFPI {% endblock %}
+
+{% block content %}
+    <div class="hero-body">
+        <div class="box" id="login-box">
+            <form>
+                <div class="field">
+                    <label class="label" id="user-label">Usuário</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Digite seu usuário do sistema">
+                        <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Senha</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" placeholder="Digite sua senha">
+                        <span class="icon is-small is-left">
+                                <i class="fas fa-key"></i>
+                            </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control columns is-centered is-mobile is-desktop" id="login-submit-control">
+                        <button class="button is-dark" id="login-button">Entrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
