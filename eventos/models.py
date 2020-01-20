@@ -23,9 +23,7 @@ class Evento(models.Model):
         return self.nome
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, so set slug
-            self.slug = slugify(self.nome)
+        self.slug = slugify(self.nome)
 
         super(Evento, self).save(*args, **kwargs)
 

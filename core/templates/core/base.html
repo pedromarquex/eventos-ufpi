@@ -17,7 +17,7 @@
 <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
     <div class="container" id="navbar-container">
         <div class="navbar-brand">
-            <a class="navbar-item" id="logo" href="#">EVENTOS | UFPI</a>
+            <a class="navbar-item" id="logo" href="{% url 'eventos:index' %}">EVENTOS | UFPI</a>
             <a id="navbar-burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                data-target="navbar" onclick="toggleMenu()">
                 <span aria-hidden="true"></span>
@@ -27,33 +27,34 @@
         </div>
         <div id="navbar" class="navbar-menu">
             <div class="navbar-end">
-                <a href="#" class="navbar-item">Login</a>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Admin
-                    </a>
+                {% if user.is_anonymous %}
+                    <a href="{% url 'core:login' %}" class="navbar-item">Login</a>
+                {% else %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            {{ user.first_name }}
+                        </a>
 
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Meus Eventos
-                        </a>
-                        <a class="navbar-item">
-                            Organizadores
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Sair
-                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Meus Eventos
+                            </a>
+                            <a class="navbar-item" href="{% url 'core:listar-organizadores' %}">
+                                Organizadores
+                            </a>
+                            <hr class="navbar-divider">
+                            <a href="{% url 'core:logout' %}" class="navbar-item">
+                                Sair
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </nav>
-<section class="hero is-light is-medium">
-    {% block content %}
-    {% endblock %}
-</section>
+{% block content %}
+{% endblock %}
 
 <footer class="footer hero is-dark" id="footer">
     <div class="content has-text-centered">

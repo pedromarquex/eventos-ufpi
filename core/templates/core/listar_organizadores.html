@@ -1,0 +1,344 @@
+{% extends 'core/base.html' %}
+{% block title %}Organizadores | Eventos UFPI{% endblock %}
+{% block content %}
+    <section class="section has-background-light" style="min-height: 100%;">
+        <h1 class="title has-text-centered is-1">Organizadores de Eventos</h1>
+        <div class="container" id="main-container">
+            <form method="get">
+                <div class="field is-grouped">
+                    <p class="control is-expanded">
+                        <input class="input" type="text" placeholder="Nome do Organizador">
+                    </p>
+                    <p class="control is-expanded">
+                        <input class="input" type="text" placeholder="Usuário">
+                    </p>
+                    <p class="control">
+                        <a class="button is-info has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <span>Procurar</span>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a href="{% url 'core:novo-organizador' %}" class="button is-dark has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Novo Organizador</span>
+                        </a>
+                    </p>
+                </div>
+            </form>
+            <table class="table is-striped is-bordered is-fullwidth is-hoverable" style="margin-top: 15px;">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Usuário</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for organizador in organizadores %}
+                    <tr>
+                        <td>
+                            <span>{{ organizador }}</span>
+                        </td>
+                        <td>
+                            <span>{{ organizador.email }}</span>
+                        </td>
+                        <td>
+                            <span>{{ organizador.user.username }}</span>
+                        </td>
+                        <td>
+                            <a href="#" class="link" title="Editar">
+                                <span class="icon is-small is-left has-text-dark">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="link" title="Excluir"
+                               onclick="get_confirmation('Deseja realmente excluir {{ organizador }}?')">
+                                <span class="icon is-small is-left has-text-danger">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left has-text-dark">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left has-text-danger">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Organizador 1
+                    </td>
+                    <td>
+                        organizador1@ufpi.edu.br
+                    </td>
+                    <td>
+                        organizador1
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="link">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                        </a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script>
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
+        }
+    </script>
+{% endblock %}

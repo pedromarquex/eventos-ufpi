@@ -1,14 +1,24 @@
 {% extends 'core/base.html' %}
-{% block title %} Login | Eventos UFPI {% endblock %}
+{% load widget_tweaks %}
+{% block title %}Login | Eventos UFPI{% endblock %}
 
 {% block content %}
+    <section class="hero is-light is-medium">
     <div class="hero-body">
         <div class="box" id="login-box">
-            <form>
+            <form action="{% url 'core:login' %}" method="POST">
+                {% csrf_token %}
                 <div class="field">
+                    {% if erro_login %}
+                        <div class="notification is-danger">
+                            <button class="delete"></button>
+                            {{ erro_login }}
+                        </div>
+                    {% endif %}
                     <label class="label" id="user-label">Usuário</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Digite seu usuário do sistema">
+                        {% render_field login_form.username class="input" placeholder="Digite seu usuário do sistema" %}
+                        {#                        <input name="user" class="input" type="text" placeholder="Digite seu usuário do sistema">#}
                         <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -18,7 +28,8 @@
                 <div class="field">
                     <label class="label">Senha</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="password" placeholder="Digite sua senha">
+                        {% render_field login_form.password type="password" class="input" placeholder="Digite sua senha" %}
+                        {#                        <input name="password" class="input" type="password" placeholder="Digite sua senha">#}
                         <span class="icon is-small is-left">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -26,10 +37,22 @@
                 </div>
                 <div class="field">
                     <div class="control columns is-centered is-mobile is-desktop" id="login-submit-control">
-                        <button class="button is-dark" id="login-button">Entrar</button>
+                        <button type="submit" class="button is-dark" id="login-button">Entrar</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+    </section>
 {% endblock %}

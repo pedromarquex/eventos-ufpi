@@ -26,7 +26,7 @@ SECRET_KEY = 'qitlx_fn9617&3_wj4mesh6rg%bss08i0+s9km7zg!c^-qk1_w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.100.34', '192.168.100.101']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'core',
     'eventos',
 ]
