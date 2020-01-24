@@ -9,13 +9,22 @@ class Apresentacao(models.Model):
 
 
 class Evento(models.Model):
+    # básicas
+    banner = models.ImageField(blank=True, null=True)
     nome = models.CharField(max_length=150)
-    organizador = models.OneToOneField(Organizador, on_delete=models.CASCADE)
+    sobre = models.TextField()
+    onde = models.CharField(200)
+    quando = models.CharField(200)
+
+    # contato
+    endereco = models.CharField(200)
+    telefone = models.CharField(20)
+    email = models.EmailField()
+
+    organizador = models.OneToOneField(Organizador, on_delete=models.SET_NULL)
+
     slug = models.SlugField(blank=True, null=True)
-    img1 = models.ImageField(blank=True, null=True)
-    img2 = models.ImageField(blank=True, null=True)
-    img3 = models.ImageField(blank=True, null=True)
-    apresentecao = models.OneToOneField(Apresentacao, null=True, blank=True, on_delete=models.CASCADE)
+    apresentecao = models.OneToOneField(Apresentacao, null=True, blank=True, on_delete=models.SET_NULL)
 
     is_valid = models.BooleanField(default=False)
 
@@ -30,7 +39,7 @@ class Evento(models.Model):
 
 class Programacao(models.Model):
     dia = models.IntegerField()
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento, on_delete=models.SET_NULL)
 
     def __str__(self):
         return "dia " + str(self.dia)
@@ -40,16 +49,25 @@ class MicroEvento(models.Model):
     nome = models.CharField(max_length=150)
     horario = models.TimeField()
     local = models.CharField(max_length=300)
-    programacao = models.ForeignKey(Programacao, on_delete=models.CASCADE)
+    programacao = models.ForeignKey(Programacao, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.nome
 
 
+class Palestrante(models.Model):
+    nome = models.CharField(max_length=200)
+    foto = models.ImageField(upload_to='perfil/palestrante', null=True, blank=True)
+    resumo = models.CharField(max_length=200)
+    apresentacao = models.TextField()
+
+    microevento = models.ForeignKey(MicroEvento, on_delete=models.SET_NULL)
+
+
 class Patrocinador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
-    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.nome
@@ -58,7 +76,7 @@ class Patrocinador(models.Model):
 class Realizador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
-    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.nome
@@ -67,7 +85,7 @@ class Realizador(models.Model):
 class Apoiador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
-    evento = models.OneToOneField(Evento, on_delete=models.CASCADE)
+    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.nome

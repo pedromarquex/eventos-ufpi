@@ -1,5 +1,6 @@
-body {
+body, html {
     font-family: 'Montserrat', sans-serif;
+    height: 100%;
 }
 
 #login-box {

@@ -23,3 +23,9 @@ class Eventos(View):
 
     def post(self, request):
         pass
+
+
+class EditarEvento(View):
+    def get(self, request):
+        template_name = 'eventos/editar-evento.html'
+        return render(request, template_name)

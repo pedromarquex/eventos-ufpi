@@ -7,7 +7,7 @@
         <div class="container hero-head" id="main-container">
             <div class="box">
                 <h1 class="title is-2 has-text-centered">Novo Organizador</h1>
-                <form action="{% url 'core:novo-organizador' %}" method="POST">
+                <form action="{% url 'core:novo-organizador' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Administrador(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='perfil/administrador', null=True, blank=True)
     email = models.EmailField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -16,7 +16,7 @@ class Administrador(models.Model):
 class Organizador(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='perfil/organizador', null=True, blank=True)
     email = models.EmailField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
