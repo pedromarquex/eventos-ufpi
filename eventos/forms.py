@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import *
+from .models import Evento, Dia, MicroEvento, Palestrante
+from .models import Patrocinador, Realizador, Apoiador
 
 
 class EventoForm(ModelForm):
@@ -8,21 +9,21 @@ class EventoForm(ModelForm):
         fields = '__all__'
 
 
-class ApresentacaoForm(ModelForm):
+class DiaForm(ModelForm):
     class Meta:
-        model = Apresentacao
-        fields = '__all__'
-
-
-class ProgramacaoForm(ModelForm):
-    class Meta:
-        model = Programacao
+        model = Dia
         fields = '__all__'
 
 
 class MicroEventoForm(ModelForm):
     class Meta:
         model = MicroEvento
+        fields = '__all__'
+
+
+class PalestranteForm(ModelForm):
+    class Meta:
+        model = Palestrante
         fields = '__all__'
 
 
