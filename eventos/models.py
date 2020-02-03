@@ -4,6 +4,7 @@ from core.models import Organizador
 
 
 class Evento(models.Model):
+    """ Guarda informações básicas de um Evento """
     # informações básicas
     banner = models.ImageField(upload_to='eventos/banner', blank=True, null=True)
     nome = models.CharField(max_length=150)
@@ -35,7 +36,10 @@ class Evento(models.Model):
 
 
 class Dia(models.Model):
+    """ Dia de Evento, começando em 1 """
     dia = models.IntegerField()
+
+    # Referência para um Evento
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -43,9 +47,15 @@ class Dia(models.Model):
 
 
 class MicroEvento(models.Model):
+    """ Um micro evento corresponde à uma palestra, keynote,
+     ou mesmo um acontecimento como início do credenciamento """
+
+    # informações básicas
     nome = models.CharField(max_length=150)
     horario = models.TimeField()
     local = models.CharField(max_length=300)
+
+    # referência para um Dia de Evento
     dia = models.ForeignKey(Dia, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -53,11 +63,15 @@ class MicroEvento(models.Model):
 
 
 class Palestrante(models.Model):
+    """ Participante que será responsável por uma palestra
+     no Evento. Não será autenticável """
+    # informações básicas
     nome = models.CharField(max_length=200)
     foto = models.ImageField(upload_to='perfil/palestrante', null=True, blank=True)
     resumo = models.CharField(max_length=200)
     apresentacao = models.TextField()
 
+    # referência para um MicroEvento
     microevento = models.ForeignKey(MicroEvento, on_delete=models.SET_NULL, null=True, blank=True)
 
 

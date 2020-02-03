@@ -3,6 +3,12 @@ from .models import Evento, Dia, MicroEvento, Palestrante
 from .models import Patrocinador, Realizador, Apoiador
 
 
+class EventoAdminForm(ModelForm):
+    class Meta:
+        model = Evento
+        fields = ['nome', 'organizador']
+
+
 class EventoForm(ModelForm):
     class Meta:
         model = Evento
