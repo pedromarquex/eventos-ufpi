@@ -36,12 +36,14 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item">
+                            <a class="navbar-item" href="{% url 'core:meus-eventos' %}">
                                 Meus Eventos
                             </a>
-                            <a class="navbar-item" href="{% url 'core:listar-organizadores' %}">
-                                Organizadores
-                            </a>
+                            {% if is_admin %}
+                                <a class="navbar-item" href="{% url 'core:listar-organizadores' %}">
+                                    Organizadores
+                                </a>
+                            {% endif %}
                             <hr class="navbar-divider">
                             <a href="{% url 'core:logout' %}" class="navbar-item">
                                 Sair

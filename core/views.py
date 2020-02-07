@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from eventos.models import Eventos
 
 from .models import Administrador, Organizador
 from .forms import OrganizadorForm
@@ -26,7 +27,7 @@ class Login(View):
         login_form = AuthenticationForm(request, data=request.POST)
         if login_form.is_valid():
             login(request, login_form.get_user())
-            return redirect('eventos:index')
+            return redirect('core:meus-eventos')
         else:
             template_name = 'core/login.html'
             erro_login = "Usuário ou senha inválida."
@@ -88,3 +89,18 @@ class ListarOrganizador(View):
         organizadores = Organizador.objects.filter(is_active=True)
         context = {'user': user, 'organizadores': organizadores}
         return render(request, template_name, context)
+
+
+def meus_eventos(request):
+    template_name = 'eventos/meus_eventos.html'
+    is_admin = None
+    if request.user.is_anonymous:
+        user = request.user
+    else:
+        try:
+            user = Administrador.objects.get(user=request.user)
+        except:
+            user = Organizador.objects.get(user=request.user)
+    eventos =
+    context = {'user': user, 'is_admin': is_admin}
+    return render(request, template_name, context)

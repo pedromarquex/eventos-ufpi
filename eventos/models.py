@@ -4,7 +4,7 @@ from core.models import Organizador
 
 
 class Evento(models.Model):
-    """ Guarda informações básicas de um Evento """
+    """ Guarda as informações de um Evento """
     # informações básicas
     banner = models.ImageField(upload_to='eventos/banner', blank=True, null=True)
     nome = models.CharField(max_length=150)
@@ -51,9 +51,13 @@ class MicroEvento(models.Model):
      ou mesmo um acontecimento como início do credenciamento """
 
     # informações básicas
-    nome = models.CharField(max_length=150)
+
+    # abertura, keynote, artigo, palestra, pausa, encerramento, etc...
+    tipo = models.CharField(max_length=40, null=True, blank=True)
+    #
+    nome = models.CharField(max_length=150, null=True, blank=True)
     horario = models.TimeField()
-    local = models.CharField(max_length=300)
+    resumo = models.TextField(null=True, blank=True)
 
     # referência para um Dia de Evento
     dia = models.ForeignKey(Dia, on_delete=models.SET_NULL, null=True, blank=True)

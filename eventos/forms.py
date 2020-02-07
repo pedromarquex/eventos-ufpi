@@ -13,6 +13,7 @@ class EventoForm(ModelForm):
     class Meta:
         model = Evento
         fields = '__all__'
+        exclude = ['nome', 'organizador', 'slug', 'is_active']
 
 
 class DiaForm(ModelForm):
