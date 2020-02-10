@@ -46,7 +46,7 @@ class Dia(models.Model):
         return "dia " + str(self.dia)
 
 
-class MicroEvento(models.Model):
+class Atividade(models.Model):
     """ Um micro evento corresponde à uma palestra, keynote,
      ou mesmo um acontecimento como início do credenciamento """
 
@@ -54,7 +54,6 @@ class MicroEvento(models.Model):
 
     # abertura, keynote, artigo, palestra, pausa, encerramento, etc...
     tipo = models.CharField(max_length=40, null=True, blank=True)
-    #
     nome = models.CharField(max_length=150, null=True, blank=True)
     horario = models.TimeField()
     resumo = models.TextField(null=True, blank=True)
@@ -72,16 +71,18 @@ class Palestrante(models.Model):
     # informações básicas
     nome = models.CharField(max_length=200)
     foto = models.ImageField(upload_to='perfil/palestrante', null=True, blank=True)
+    link = models.CharField(max_length=100, null=True, blank=True)
     resumo = models.CharField(max_length=200)
     apresentacao = models.TextField()
 
-    # referência para um MicroEvento
-    microevento = models.ForeignKey(MicroEvento, on_delete=models.SET_NULL, null=True, blank=True)
+    # referência para uma Atividade
+    atividade = models.ForeignKey(Atividade, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Patrocinador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    link = models.CharField(max_length=150, null=True, blank=True)
     evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -91,6 +92,7 @@ class Patrocinador(models.Model):
 class Realizador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    link = models.CharField(max_length=150, null=True, blank=True)
     evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -100,6 +102,7 @@ class Realizador(models.Model):
 class Apoiador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
+    link = models.CharField(max_length=150, null=True, blank=True)
     evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

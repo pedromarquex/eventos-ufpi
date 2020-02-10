@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from eventos.models import Eventos
 
 from .models import Administrador, Organizador
 from .forms import OrganizadorForm
@@ -101,6 +100,6 @@ def meus_eventos(request):
             user = Administrador.objects.get(user=request.user)
         except:
             user = Organizador.objects.get(user=request.user)
-    eventos =
+    # eventos =
     context = {'user': user, 'is_admin': is_admin}
     return render(request, template_name, context)
