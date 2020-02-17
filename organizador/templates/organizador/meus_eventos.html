@@ -1,11 +1,10 @@
 {% extends 'core/base.html' %}
-
-{% block title %} Index | Eventos UFPI {% endblock %}
+{% block title %}Meus Eventos{% endblock %}
 
 {% block content %}
-    <section class="hero is-light is-medium" style="min-height: 80vh">
+    <section class="hero is-light is-medium" style="min-height: 80vh;">
         <div class="content container" id="main-container">
-            <h1 class="title has-text-centered">Todos os Eventos</h1>
+            <h1 class="title has-text-centered">Eventos de {{ user }}</h1>
             <div class="columns is-multiline">
                 <div class="column is-one-third">
                     <div class="card">
@@ -33,6 +32,9 @@
                                 </div>
                             </div>
                         </div>
+                        <footer class="card-footer">
+                            <a href="#" class="card-footer-item">Editar</a>
+                        </footer>
                     </div>
                 </div>
                 <div class="column is-one-third">
@@ -59,6 +61,9 @@
                                 </div>
                             </div>
                         </div>
+                        <footer class="card-footer">
+                            <a href="#" class="card-footer-item">Editar</a>
+                        </footer>
                     </div>
                 </div>
                 <div class="column is-one-third">
@@ -87,72 +92,51 @@
                                 </div>
                             </div>
                         </div>
+                        <footer class="card-footer">
+                            <a href="#" class="card-footer-item">Editar</a>
+                        </footer>
                     </div>
                 </div>
-                {% for evento in eventos %}
-                    <div class="column is-one-third">
-                        <div class="card">
-                            <div class="card-image">
-                                <a href="#">
-                                    <figure class="image">
-                                        {% if evento.banner %}
-                                            <img src="{{ evento.banner.url }}" alt="banner do evento">
-                                        {% else %}
-                                            <img src="https://bulma.io/images/placeholders/1280x960.png"
-                                                 alt="Placeholder image">
-                                        {% endif %}
-                                    </figure>
-                                </a>
-                            </div>
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-content has-text-centered">
-                                        <a href="#">
-                                            <p class="title is-4">{{ evento.nome }}</p>
-                                        </a>
-                                        <p class="subtitle is-6">@{{ evento.instagram }}</p>
-                                        <p class="subtitle is-6"><i
-                                                class="fas fa-map-marker-alt"></i>{{ evento.onde }}<br>
-                                            <i class="fas fa-clock"></i>
-                                            <time datetime="2016-1-1">{{ evento.quando }}</time>
-                                        </p>
+                {% if eventos %}
+                    {% for evento in eventos %}
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <a href="#">
+                                        <figure class="image">
+                                            {% if evento.banner %}
+                                                <img src="{{ evento.banner.url }}" alt="banner do evento">
+                                            {% else %}
+                                                <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                                     alt="Placeholder image">
+                                            {% endif %}
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-content has-text-centered">
+                                            <a href="#">
+                                                <p class="title is-4">{{ evento.nome }}</p>
+                                            </a>
+                                            <p class="subtitle is-6">@{{ evento.instagram }}</p>
+                                            <p class="subtitle is-6"><i
+                                                    class="fas fa-map-marker-alt"></i>{{ evento.onde }}<br>
+                                                <i class="fas fa-clock"></i>
+                                                <time datetime="2016-1-1">{{ evento.quando }}</time>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+                                <footer class="card-footer">
+                                    <a href="{% url 'eventos:editar-evento-info' slug=evento.slug %}" class="card-footer-item">Editar</a>
+                                </footer>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
-{#        <div class="container" style="margin-bottom: 12px">#}
-{#            <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">#}
-{#                <a class="pagination-previous has-icon-left">#}
-{#                <span class="icon">#}
-{#                    <i class="fas fa-arrow-left"></i>#}
-{#                </span>#}
-{#                    <span>Anterior</span>#}
-{#                </a>#}
-{#                </a>#}
-{#                <a class="pagination-next has-icon-right">#}
-{#                    <span>Próxima</span>#}
-{#                    <span class="icon">#}
-{#                            <i class="fas fa-arrow-right"></i>#}
-{#                        </span></a>#}
-{#                <ul class="pagination-list">#}
-{#                    <li><a class="pagination-link" aria-label="Goto page 45">1</a></li>#}
-{#                    <li><span class="pagination-ellipsis">&hellip;</span></li>#}
-                    {#                    <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>#}
-{#                    <li>#}
-{#                        <a class="pagination-link has-background-grey-dark" aria-label="Page 46" aria-current="page">#}
-{#                            <span style="color: white">46</span>#}
-{#                        </a>#}
-{#                    </li>#}
-                    {#                    <li><a class="pagination-link" aria-label="Goto page 45">47</a></li>#}
-{#                    <li><span class="pagination-ellipsis">&hellip;</span></li>#}
-{#                    <li><a class="pagination-link has-icon-right" aria-label="Goto page 45">96</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#            </nav>#}
-{#        </div>#}
+
     </section>
 {% endblock %}

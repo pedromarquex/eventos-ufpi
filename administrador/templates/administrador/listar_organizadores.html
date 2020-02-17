@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% block title %}Organizadores | Eventos UFPI{% endblock %}
 {% block content %}
-    <section class="section has-background-light" style="min-height: 100%;">
+    <section class="section has-background-light" style="min-height: 80vh;">
         <div class="box container is-desktop">
             <h1 class="title has-text-centered is-1">Organizadores de Eventos</h1>
             <div class="container" id="main-container">
@@ -22,7 +22,7 @@
                             </a>
                         </p>
                         <p class="control">
-                            <a href="{% url 'core:novo-organizador' %}" class="button is-info has-icons-left">
+                            <a href="{% url 'administrador:novo-organizador' %}" class="button is-info has-icons-left">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-plus"></i>
                             </span>

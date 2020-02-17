@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="js/main.js"></script>
+    <title>Index | Eventos UFPI</title>
+</head>
+
+<body>
+    <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
+        <div class="container" id="navbar-container">
+            <div class="navbar-brand">
+                <a class="navbar-item" id="logo" href="#">EVENTOS | UFPI</a>
+                <a id="navbar-burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbar" onclick="toggleMenu()">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Ricardo
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Meus Eventos
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item">
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="section has-background-light" style="min-height: 90vh;">
+        <div class="container box" style="max-width: 950px; min-height: 80vh;">
+            <h1 class="title has-text-centered has-icons-right is-2">
+                <span>Editar - OLIMPÍADA IBERO-AMERICANA DE QUÍMICA 2020</span>
+                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
+            </h1>
+            <div class="tabs is-centered is-boxed">
+                <ul>
+                    <li><a>Infos e Contatos</a></li>
+                    <li><a>Dias de Eventos</a></li>
+                    <li class="is-active"><a>Palestrantes</a></li>
+                    <li><a>Patrocinadores</a></li>
+                    <li><a>Realizadores</a></li>
+                    <li><a>Apoiadores</a></li>
+                </ul>
+            </div>
+            <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
+                <p class="panel-heading has-text-centered" style="display: flex; justify-content: space-between;">
+                    <a class="link has-text-light">
+                        <span class="icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                    </a>
+                    <span class="is-size-4">Novo Palestrante</span>
+                    <a class="link has-text-light is-invisible">
+                        <span class="icon">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+                </p>
+
+                <form method="POST" enctype="multipart/form-data" style="margin: 20px 10px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Nome</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left">
+                                    <input class="input" type="text" placeholder="Ex: Credenciamento">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Foto</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <div id="file-js-example" class="file has-name is-fullwidth">
+                                        <label class="file-label">
+                                            <input class="file-input" type="file" name="resume">
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">Selecione um arquivo</span>
+                                            </span>
+                                            <span class="file-name">Nenhum Arquivo Selecionado</span>
+                                        </label>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Link</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left">
+                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-link"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Resumo</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea class="textarea"
+                                            placeholder="Resumo sobre a apresentação do Palestrante"
+                                            rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <p class="help is-pulled-right">300 caracteres</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Apresentação</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <textarea class="textarea"
+                                        placeholder="Texto que apresente o Palestrante de forma completa"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <!-- Left empty for spacing -->
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control has-icon">
+                                    <button class="button is-dark is-outlined is-fullwidth"
+                                        style="max-width: 400px; margin: 0 auto 16px;">
+                                        <span>Confirmar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+    <footer class="footer hero is-dark">
+        <div class="content has-text-centered">
+            <p>
+                Developed by LASCO&#8482;
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.querySelector('#file-js-example input[type=file]');
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const fileName = document.querySelector('#file-js-example .file-name');
+                fileName.textContent = fileInput.files[0].name;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
-from django.forms import ModelForm
-from .models import Evento, Dia, MicroEvento, Palestrante
+from django.forms import ModelForm, FileInput
+from .models import Evento, Dia, Atividade, Palestrante
 from .models import Patrocinador, Realizador, Apoiador
 
 
@@ -14,6 +14,9 @@ class EventoForm(ModelForm):
         model = Evento
         fields = '__all__'
         exclude = ['nome', 'organizador', 'slug', 'is_active']
+        widgets = {
+            'banner': FileInput(),
+        }
 
 
 class DiaForm(ModelForm):
@@ -22,9 +25,9 @@ class DiaForm(ModelForm):
         fields = '__all__'
 
 
-class MicroEventoForm(ModelForm):
+class Atividade(ModelForm):
     class Meta:
-        model = MicroEvento
+        model = Atividade
         fields = '__all__'
 
 

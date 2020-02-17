@@ -3,11 +3,11 @@
 {% block title %}Novo Organizador | Eventos UFPI{% endblock %}
 
 {% block content %}
-    <section class="section hero is-light">
+    <section class="section hero is-light" style="min-height: 80vh">
         <div class="container hero-head" id="main-container">
             <div class="box">
-                <h1 class="title is-2 has-text-centered">Novo Organizador</h1>
-                <form action="{% url 'core:novo-organizador' %}" method="POST" enctype="multipart/form-data">
+                <h1 class="title is-2 has-text-centered">Editar Organizador</h1>
+                <form action="{% url 'administrador:novo-organizador' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -90,45 +90,16 @@
                     </div>
 
                     <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Senha</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field user_form.password1 class="input" placeholder="Sua senha secreta" %}
-{#                                    <input id="password" class="input" type="password" placeholder="Sua senha secreta">#}
-                                    <span class="icon is-small is-left">
-                                    <i class="fas fa-key"></i>
-                                </span>
-                                </p>
-                            </div>
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field user_form.password2 class="input" placeholder="Confirme sua senha" %}
-{#                                    <input id="password" class="input" type="password" placeholder="Sua senha secreta">#}
-                                    <span class="icon is-small is-left">
-                                    <i class="fas fa-key"></i>
-                                </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="field is-horizontal">
                         <div class="field-label">
                             <!-- Left empty for spacing -->
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <div class="control has-icon-left is-pulled-right">
-                                    <button class="button is-dark">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span>Cadastrar</span>
-                                    </button>
+                                <div class="control has-icon-left">
+                                    <button class="button is-dark is-outlined is-fullwidth"
+                                    style="max-width: 320px; margin: 0 auto 16px;">
+                                    <span>Confirmar</span>
+                                </button>
                                 </div>
                             </div>
                         </div>

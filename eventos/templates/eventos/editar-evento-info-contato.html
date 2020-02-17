@@ -1,0 +1,228 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <section class="section has-background-light" style="min-height: 100vh;">
+        {% if success_message %}
+            <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
+                <button class="delete"></button>
+                <strong>{{ success_message }}</strong>
+            </div>
+        {% endif %}
+
+        <div class="container box" style="max-width: 950px;">
+            <h1 class="title has-text-centered has-icons-right is-2">
+                <span>Editar | {{ evento.nome }}</span>
+                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
+            </h1>
+            <div class="tabs is-centered is-boxed">
+                <ul>
+                    <li class="is-active"><a>Infos e Contatos</a></li>
+                    <li><a>Dias de Eventos</a></li>
+                    <li><a>Palestrantes</a></li>
+                    <li><a>Patrocinadores</a></li>
+                    <li><a>Realizadores</a></li>
+                    <li><a>Apoiadores</a></li>
+                </ul>
+            </div>
+            <form style="margin-bottom: 20px;" action="{% url 'eventos:editar-evento-info' slug=evento.slug %}"
+                  method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h3 class="title is-4 has-text-centered">Informações básicas do Evento</h3>
+
+                <!-- Onde -->
+                <!-- Quando -->
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Data e Local:</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                {% render_field evento_form.onde class="input" placeholder="Ex: Walter Pyramid, Long Beach - CA" %}
+                                {#                                <input class="input" type="text" placeholder="Ex: Walter Pyramid, Long Beach - CA">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                            </p>
+                            {% for error in form.evento.onde.errors %}
+                                <p class="help is-danger">This username is available</p>
+                            {% endfor %}
+
+                        </div>
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left has-icons-right">
+                                {% render_field evento_form.quando class="input" placeholder="Ex: 20 - 25 de Dezembro de 2021" %}
+                                {#                                <input class="input" type="email" placeholder="Ex: 20 - 25 de Dezembro de 2021">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sobre -->
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Sobre o Evento:</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                {% render_field evento_form.sobre class="textarea" placeholder="Conte o que podemos esperar do evento" %}
+                                {#                                <textarea class="textarea"#}
+                                {#                                    placeholder="Conte o que podemos esperar do evento"></textarea>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Banner -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Banner do Evento</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                            <div id="file-js-example" class="file has-name is-fullwidth">
+                                <label class="file-label">
+                                    {% render_field evento_form.banner class="file-input" name="resume" %}
+                                    {#                                        <input class="file-input" type="file" name="resume">#}
+                                    <span class="file-cta">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label">Selecione um arquivo</span>
+                                        </span>
+                                    <span class="file-name">
+                                            {% if evento.banner %}
+                                                {{ evento.banner }}
+                                            {% else %}
+                                                Nenhum Arquivo Selecionado
+                                            {% endif %}
+                                            </span>
+                                </label>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="title is-4 has-text-centered" style="margin-top: 20px;">Informações de Contato</h3>
+                <h4 class="subtitle is-6 has-text-centered">Diga onde podemos encontrar os Organizadores</h4>
+                <!-- Endereço -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Endereço:</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                {% render_field evento_form.endereco class="input" placeholder="Coordenação de Letras - CCHL" %}
+                                {#                                <input class="input" type="text" placeholder="Ex: Coordenação de Letras - CCHL">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telefone -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Telefone: </label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                {% render_field evento_form.telefone class="input" %}
+                                {#                                <input class="input" type="text" placeholder="Telefone da Organização">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Email de Contato -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Email</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                {% render_field evento_form.email class="input" placeholder="Ex: contato@ufpi.edu.br" %}
+                                {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Instagram</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                {% render_field evento_form.instagram class="input" placeholder="Ex: instagram" %}
+                                {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
+                                <span class="icon is-small is-left">
+                                    <i class="fab fa-instagram"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <!-- Left empty for spacing -->
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control has-icon">
+                                <button class="button is-dark is-outlined is-fullwidth"
+                                        style="max-width: 400px; margin: 0 auto 16px;">
+                                    <span>Confirmar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <footer class="footer hero is-dark">
+        <div class="content has-text-centered">
+            <p>
+                Developed by LASCO&#8482;
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.querySelector('#file-js-example input[type=file]');
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const fileName = document.querySelector('#file-js-example .file-name');
+                fileName.textContent = fileInput.files[0].name;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

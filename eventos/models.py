@@ -1,6 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from core.models import Organizador
+from organizador.models import Organizador
 
 
 class Evento(models.Model):
@@ -11,6 +11,7 @@ class Evento(models.Model):
     sobre = models.TextField(null=True, blank=True)
     onde = models.CharField(max_length=200, null=True, blank=True)
     quando = models.CharField(max_length=200, null=True, blank=True)
+    instagram = models.CharField(max_length=100)
 
     # ĩnformações de contato
     endereco = models.CharField(max_length=200, null=True, blank=True)
@@ -18,7 +19,7 @@ class Evento(models.Model):
     email = models.EmailField(null=True, blank=True)
 
     # organizador do evento
-    organizador = models.OneToOneField(Organizador, on_delete=models.SET_NULL, null=True, blank=True)
+    organizador = models.ForeignKey(Organizador, on_delete=models.SET_NULL, null=True, blank=True)
 
     # slug gerado automaticamente, hidden no formulário
     slug = models.SlugField(blank=True, null=True)

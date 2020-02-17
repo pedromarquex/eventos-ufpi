@@ -36,11 +36,11 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{% url 'core:meus-eventos' %}">
+                            <a class="navbar-item" href="{% url 'organizador:meus-eventos' %}">
                                 Meus Eventos
                             </a>
                             {% if is_admin %}
-                                <a class="navbar-item" href="{% url 'core:listar-organizadores' %}">
+                                <a class="navbar-item" href="{% url 'administrador:listar-organizadores' %}">
                                     Organizadores
                                 </a>
                             {% endif %}
