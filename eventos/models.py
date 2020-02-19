@@ -11,7 +11,7 @@ class Evento(models.Model):
     sobre = models.TextField(null=True, blank=True)
     onde = models.CharField(max_length=200, null=True, blank=True)
     quando = models.CharField(max_length=200, null=True, blank=True)
-    instagram = models.CharField(max_length=100)
+    instagram = models.CharField(max_length=100, null=True, blank=True)
 
     # ĩnformações de contato
     endereco = models.CharField(max_length=200, null=True, blank=True)

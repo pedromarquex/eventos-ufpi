@@ -43,6 +43,22 @@ class EditarEventoInfo(View):
         template_name = 'eventos/editar-evento-info-contato.html'
         e = Evento.objects.get(slug=slug)
         evento_form = EventoForm(request.POST, request.FILES, instance=e)
+        if not request.POST['onde']:
+            evento_form.add_error('onde', 'Este campo é obrigatório')
+        if not request.POST['quando']:
+            evento_form.add_error('quando', 'Este campo é obrigatório')
+        if not request.POST['sobre']:
+            evento_form.add_error('sobre', 'Este campo é obrigatório')
+        if not request.FILES and not e.banner:
+            evento_form.add_error('banner', 'Este campo é obrigatório')
+        if not request.POST['endereco']:
+            evento_form.add_error('endereco', 'Este campo é obrigatório')
+        if not request.POST['telefone']:
+            evento_form.add_error('telefone', 'Este campo é obrigatório')
+        if not request.POST['email']:
+            evento_form.add_error('email', 'Este campo é obrigatório')
+        if not request.POST['instagram']:
+            evento_form.add_error('instagram', 'Este campo é obrigatório')
         user = Organizador.objects.get(user=request.user)
         if evento_form.is_valid():
             evento_form.save()
