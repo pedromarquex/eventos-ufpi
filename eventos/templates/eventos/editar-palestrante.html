@@ -1,62 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="js/main.js"></script>
-    <title>Index | Eventos UFPI</title>
-</head>
-
-<body>
-    <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
-        <div class="container" id="navbar-container">
-            <div class="navbar-brand">
-                <a class="navbar-item" id="logo" href="#">EVENTOS | UFPI</a>
-                <a id="navbar-burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbar" onclick="toggleMenu()">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div id="navbar" class="navbar-menu">
-                <div class="navbar-end">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Ricardo
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                Meus Eventos
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Sair
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
     <section class="section has-background-light" style="min-height: 90vh;">
+        {% if success_message %}
+            <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
+                <button class="delete"></button>
+                <strong>{{ success_message }}</strong>
+            </div>
+        {% endif %}
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
-                <span>Editar - OLIMPÍADA IBERO-AMERICANA DE QUÍMICA 2020</span>
+                <span>Editar | {{ evento.nome }}</span>
                 <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
-                    <li><a>Infos e Contatos</a></li>
-                    <li><a>Dias de Eventos</a></li>
-                    <li class="is-active"><a>Palestrantes</a></li>
+                    <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e
+                        Contatos</a></li>
+                    <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
+                    <li class="is-active"><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a>
+                    </li>
                     <li><a>Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
@@ -77,7 +40,11 @@
                     </a>
                 </p>
 
-                <form method="POST" enctype="multipart/form-data" style="margin: 20px 10px;">
+                <form method="POST"
+                      action="{% url 'eventos:editar-palestrante' slug=evento.slug pk=pk %}"
+                      enctype="multipart/form-data"
+                      style="margin: 20px 10px;">
+                    {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">Nome</label>
@@ -85,7 +52,8 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    <input class="input" type="text" placeholder="Ex: Credenciamento">
+                                    {% render_field p_form.nome class="input" placeholder="Nome do palestrante" %}
+                                    {#                                    <input class="input" type="text" placeholder="Ex: Credenciamento">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -101,18 +69,23 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <div id="file-js-example" class="file has-name is-fullwidth">
-                                        <label class="file-label">
-                                            <input class="file-input" type="file" name="resume">
-                                            <span class="file-cta">
+                                <div id="file-js-example" class="file has-name is-fullwidth">
+                                    <label class="file-label">
+                                        {% render_field p_form.foto class="file-input" name="resume" %}
+                                        {#                                            <input class="file-input" type="file" name="resume">#}
+                                        <span class="file-cta">
                                                 <span class="file-icon">
                                                     <i class="fas fa-upload"></i>
                                                 </span>
                                                 <span class="file-label">Selecione um arquivo</span>
                                             </span>
+                                        {% if p.foto %}
+                                            <span class="file-name">{{ p.foto }}</span>
+                                        {% else %}
                                             <span class="file-name">Nenhum Arquivo Selecionado</span>
-                                        </label>
-                                    </div>
+                                        {% endif %}
+                                    </label>
+                                </div>
                                 </p>
                             </div>
                         </div>
@@ -125,7 +98,8 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">
+                                    {% render_field p_form.link type="url" class="input" placeholder="Instagram, Facebook, Homepage..." %}
+                                    {#                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-link"></i>
                                     </span>
@@ -142,9 +116,10 @@
                             <div class="field">
                                 <div class="field">
                                     <div class="control">
-                                        <textarea class="textarea"
-                                            placeholder="Resumo sobre a apresentação do Palestrante"
-                                            rows="2"></textarea>
+                                        {% render_field p_form.resumo class="textarea" placeholder="Pequeno resumo sobre o palestrante" rows="2" %}
+                                        {#                                        <textarea class="textarea"#}
+                                        {#                                                  placeholder="Resumo sobre a apresentação do Palestrante"#}
+                                        {#                                                  rows="2"></textarea>#}
                                     </div>
                                 </div>
                                 <p class="help is-pulled-right">300 caracteres</p>
@@ -158,8 +133,26 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <textarea class="textarea"
-                                        placeholder="Texto que apresente o Palestrante de forma completa"></textarea>
+                                    {% render_field p_form.apresentacao class="textarea" placeholder="Texto que apresente o Palestrante de forma completa" %}
+                                    {#                                    <textarea class="textarea"#}
+                                    {#                                              placeholder="Texto que apresente o Palestrante de forma completa"></textarea>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Atividade</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <div class="select">
+                                        <select>
+                                            <option>Select dropdown</option>
+                                            <option>With options</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +166,7 @@
                             <div class="field">
                                 <div class="control has-icon">
                                     <button class="button is-dark is-outlined is-fullwidth"
-                                        style="max-width: 400px; margin: 0 auto 16px;">
+                                            style="max-width: 400px; margin: 0 auto 16px;">
                                         <span>Confirmar</span>
                                     </button>
                                 </div>
@@ -184,14 +177,6 @@
             </article>
         </div>
     </section>
-    <footer class="footer hero is-dark">
-        <div class="content has-text-centered">
-            <p>
-                Developed by LASCO&#8482;
-            </p>
-        </div>
-    </footer>
-
     <script>
         const fileInput = document.querySelector('#file-js-example input[type=file]');
         fileInput.onchange = () => {
@@ -200,8 +185,15 @@
                 fileName.textContent = fileInput.files[0].name;
             }
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
     </script>
 
-</body>
-
-</html>
+{% endblock %}

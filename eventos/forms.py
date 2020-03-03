@@ -1,4 +1,4 @@
-from django.forms import ModelForm, FileInput
+from django.forms import ModelForm, FileInput, Select
 from .models import Evento, Dia, Atividade, Palestrante
 from .models import Patrocinador, Realizador, Apoiador
 
@@ -25,16 +25,21 @@ class DiaForm(ModelForm):
         fields = '__all__'
 
 
-class Atividade(ModelForm):
+class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
         fields = '__all__'
+        exclude = ['dia']
 
 
 class PalestranteForm(ModelForm):
     class Meta:
         model = Palestrante
         fields = '__all__'
+        exclude = ['evento']
+        widgets = {
+            'foto': FileInput()
+        }
 
 
 class PatrocinadorForm(ModelForm):

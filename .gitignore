@@ -2,6 +2,16 @@
 # Edit at https://www.gitignore.io/?templates=python,django
 
 
+# Media
+/media/eventos/banner/*.jpg
+/media/eventos/banner/*.png
+
+/media/perfil/organizador/*.png
+/media/perfil/organizador/*.jpg
+
+/media/perfil/palestrante/*.png
+/media/perfil/palestrante/*.jpg
+
 # Enviroment
 /venv
 eventos_ufpi/.env
@@ -17,7 +27,6 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.

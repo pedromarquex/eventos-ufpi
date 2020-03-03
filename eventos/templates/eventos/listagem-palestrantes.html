@@ -1,62 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% extends 'core/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="js/main.js"></script>
-    <title>Index | Eventos UFPI</title>
-</head>
+{% block content %}
 
-<body>
-    <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
-        <div class="container" id="navbar-container">
-            <div class="navbar-brand">
-                <a class="navbar-item" id="logo" href="#">EVENTOS | UFPI</a>
-                <a id="navbar-burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbar" onclick="toggleMenu()">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div id="navbar" class="navbar-menu">
-                <div class="navbar-end">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Ricardo
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                Meus Eventos
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Sair
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
     <section class="section has-background-light" style="min-height: 90vh;">
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
-                <span>Editar - OLIMPÍADA IBERO-AMERICANA DE QUÍMICA 2020</span>
+                <span>Editar | {{ evento.nome }}</span>
                 <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
-                    <li><a>Infos e Contatos</a></li>
-                    <li><a>Dias de Eventos</a></li>
-                    <li class="is-active"><a>Palestrantes</a></li>
+                    <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e
+                        Contatos</a></li>
+                    <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
+                    <li class="is-active"><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
                     <li><a>Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
@@ -75,6 +32,23 @@
                         </span>
                         <span>Adicionar</span>
                     </a> -->
+                {% for p in palestrantes %}
+                    <a class="panel-block is-active" href="{% url 'eventos:editar-palestrante' slug=evento.slug pk=p.pk %}">
+
+                    <figure class="image is-64x64" style="margin-right: 20px;">
+                        <img class="is-rounded" src="{{ p.foto.url }}">
+                    </figure>
+                    <span>{{ p.nome }}</span>
+                    <object style="margin-left: auto;">
+                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
+                            <span class="icon">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                        </a>
+                    </object>
+                </a>
+                {% endfor %}
+
                 <a class="panel-block is-active">
 
                     <figure class="image is-64x64" style="margin-right: 20px;">
@@ -131,7 +105,8 @@
                         </a>
                     </object>
                 </a> -->
-                <a class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
+                <a href="{% url 'eventos:novo-palestrante' slug=evento.slug %}"
+                        class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
                     <span class="panel-icon">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                     </span>
@@ -140,24 +115,5 @@
             </article>
         </div>
     </section>
-    <footer class="footer hero is-dark">
-        <div class="content has-text-centered">
-            <p>
-                Developed by LASCO&#8482;
-            </p>
-        </div>
-    </footer>
 
-    <script>
-        const fileInput = document.querySelector('#file-js-example input[type=file]');
-        fileInput.onchange = () => {
-            if (fileInput.files.length > 0) {
-                const fileName = document.querySelector('#file-js-example .file-name');
-                fileName.textContent = fileInput.files[0].name;
-            }
-        }
-    </script>
-
-</body>
-
-</html>
+{% endblock %}

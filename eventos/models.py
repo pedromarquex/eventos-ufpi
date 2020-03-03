@@ -39,16 +39,17 @@ class Evento(models.Model):
 class Dia(models.Model):
     """ Dia de Evento, começando em 1 """
     dia = models.IntegerField()
+    data = models.CharField(max_length=15, null=True, blank=True)
 
     # Referência para um Evento
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return "dia " + str(self.dia)
+        return str(self.dia)
 
 
 class Atividade(models.Model):
-    """ Um micro evento corresponde à uma palestra, keynote,
+    """ Uma atividade corresponde à uma palestra, keynote,
      ou mesmo um acontecimento como início do credenciamento """
 
     # informações básicas
@@ -56,7 +57,7 @@ class Atividade(models.Model):
     # abertura, keynote, artigo, palestra, pausa, encerramento, etc...
     tipo = models.CharField(max_length=40, null=True, blank=True)
     nome = models.CharField(max_length=150, null=True, blank=True)
-    horario = models.TimeField()
+    horario = models.CharField(max_length=8, null=True, blank=True)
     resumo = models.TextField(null=True, blank=True)
 
     # referência para um Dia de Evento
@@ -71,13 +72,23 @@ class Palestrante(models.Model):
      no Evento. Não será autenticável """
     # informações básicas
     nome = models.CharField(max_length=200)
-    foto = models.ImageField(upload_to='perfil/palestrante', null=True, blank=True)
+    foto = models.ImageField(upload_to='perfil/palestrante', null=True, blank=True, default='perfil/default.png')
     link = models.CharField(max_length=100, null=True, blank=True)
-    resumo = models.CharField(max_length=200)
-    apresentacao = models.TextField()
+    resumo = models.TextField(null=True, blank=True)
+    apresentacao = models.TextField(null=True, blank=True)
 
     # referência para uma Atividade
-    atividade = models.ForeignKey(Atividade, on_delete=models.SET_NULL, null=True, blank=True)
+    evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
+
+    atividade = models.ForeignKey(
+        Atividade,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.nome
 
 
 class Patrocinador(models.Model):

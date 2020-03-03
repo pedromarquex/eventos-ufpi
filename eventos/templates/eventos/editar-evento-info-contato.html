@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <section class="section has-background-light" style="min-height: 100vh;">
+    <section class="section has-background-grey-lighter" style="min-height: 100vh;">
         {% if success_message %}
             <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
                 <button class="delete"></button>
@@ -16,15 +16,16 @@
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
-                    <li class="is-active"><a>Infos e Contatos</a></li>
-                    <li><a>Dias de Eventos</a></li>
-                    <li><a>Palestrantes</a></li>
+                    <li class="is-active"><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e
+                        Contatos</a></li>
+                    <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
+                    <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
                     <li><a>Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
                 </ul>
             </div>
-            <form style="margin-bottom: 20px;" action="{% url 'eventos:editar-evento-info' slug=evento.slug %}"
+            <form style="margin-bottom: 20px;" action="{% url 'eventos:editar-info' slug=evento.slug %}"
                   method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <h3 class="title is-4 has-text-centered">Informações básicas do Evento</h3>

@@ -1,62 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="js/main.js"></script>
-    <title>Index | Eventos UFPI</title>
-</head>
-
-<body>
-    <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
-        <div class="container" id="navbar-container">
-            <div class="navbar-brand">
-                <a class="navbar-item" id="logo" href="#">EVENTOS | UFPI</a>
-                <a id="navbar-burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbar" onclick="toggleMenu()">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div id="navbar" class="navbar-menu">
-                <div class="navbar-end">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Ricardo
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                Meus Eventos
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Sair
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
     <section class="section has-background-light" style="min-height: 90vh;">
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
-                <span>Editar - OLIMPÍADA IBERO-AMERICANA DE QUÍMICA 2020</span>
+                <span>Editar | {{ evento.nome }}</span>
                 <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
-                    <li><a>Infos e Contatos</a></li>
+                    <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e Contatos</a></li>
                     <li class="is-active"><a>Dias de Eventos</a></li>
-                    <li><a>Palestrantes</a></li>
+                    <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
                     <li><a>Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
@@ -66,10 +21,23 @@
                 <p class="panel-heading is-size-4"></p>
                 <div class="tabs is-fullwidth" style="margin-bottom: 8px;">
                     <ul>
-                        <li class="is-active"><a>9/Set</a></li>
-                        <li><a>10/Set</a></li>
-                        <li><a>11/Set</a></li>
-                        <li><a>12/Set</a></li>
+                        {% for d in dias %}
+                            {% if d.dia == dia_atual.dia %}
+                                <li class="is-active"><a
+                                        href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">{{ d.data }}
+                                </a>
+                                </li>
+                            {% else %}
+                                <li><a
+                                        href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">{{ d.data }}
+                                </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {#                        <li class="is-active"><a>9/Set</a></li>#}
+                        {#                        <li><a>10/Set</a></li>#}
+                        {#                        <li><a>11/Set</a></li>#}
+                        {#                        <li><a>12/Set</a></li>#}
                         <li>
                             <a class="has-text-dark">
                                 <span class="icon">
@@ -90,35 +58,24 @@
                         </span>
                         <span>Adicionar</span>
                     </a> -->
-                <a class="panel-block is-active">
+                {% for a in atividades %}
+                    <a href="{% url 'eventos:editar-atividade' slug=evento.slug dia=dia_atual apk=a.pk %}" class="panel-block is-active">
                     <span class="panel-icon">
                         <i class="fas fa-clock"></i>
                     </span>
-                    <span class="has-text-info is-size-7" style="margin-right: 10px;">08:00 AM</span>
-                    <span>Chegada das Delegações</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
+                        <span class="has-text-info is-size-7" style="margin-right: 10px;">{{ a.horario }}</span>
+                        <span>{{ a.nome }}</span>
+                        <object style="margin-left: auto;">
+                            <a href="#" class="button is-outlined is-small is-danger" style="height: 20px;">
                             <span class="icon">
                                 <i class="fas fa-trash"></i>
                             </span>
-                        </a>
-                    </object>
-                </a>
-                <a class="panel-block is-active">
-                    <span class="panel-icon">
-                        <i class="fas fa-clock"></i>
-                    </span>
-                    <span class="has-text-info is-size-7" style="margin-right: 10px;">10:00 AM</span>
-                    <span >Credenciamento</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
-                            <span class="icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
-                    </object>
-                </a>
-                <a class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
+                            </a>
+                        </object>
+                    </a>
+                {% endfor %}
+                <a href="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}"
+                   class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
                     <span class="panel-icon">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                     </span>
@@ -127,13 +84,6 @@
             </article>
         </div>
     </section>
-    <footer class="footer hero is-dark">
-        <div class="content has-text-centered">
-            <p>
-                Developed by LASCO&#8482;
-            </p>
-        </div>
-    </footer>
 
     <script>
         const fileInput = document.querySelector('#file-js-example input[type=file]');
@@ -145,6 +95,4 @@
         }
     </script>
 
-</body>
-
-</html>
+{% endblock %}

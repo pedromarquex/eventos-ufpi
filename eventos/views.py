@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
 from organizador.models import Organizador
 from administrador.models import Administrador
-from .models import Evento
+from .models import Evento, Dia, Atividade, Palestrante
 
-from .forms import EventoForm
+from .forms import EventoForm, AtividadeForm, PalestranteForm
 
 
 class Index(View):
@@ -66,4 +67,180 @@ class EditarEventoInfo(View):
             context = {'evento_form': evento_form, 'user': user, 'evento': e, 'success_message': success_message}
             return render(request, template_name, context)
         context = {'evento_form': evento_form, 'user': user, 'evento': e}
+        return render(request, template_name, context)
+
+
+@login_required
+def dias_atividades(request, slug, dia):
+    template_name = 'eventos/listagem-dias.html'
+    e = Evento.objects.get(slug=slug)
+    user = Organizador.objects.get(user=request.user)
+    dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+    dias = Dia.objects.filter(evento=e)
+    atividades = Atividade.objects.filter(dia=dia_atual)
+    context = {'user': user, 'evento': e, 'dia_atual': dia_atual, 'dias': dias, 'atividades': atividades}
+    return render(request, template_name, context)
+
+
+class NovaAtividade(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, dia):
+        template_name = 'eventos/nova-atividade.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+        atividade_form = AtividadeForm()
+        context = {'user': user, 'evento': e,
+                   'dia_atual': dia_atual,
+                   'atividade_form': atividade_form}
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, dia):
+        template_name = 'eventos/nova-atividade.html'
+        e = get_object_or_404(Evento, slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+        atividade_form = AtividadeForm(request.POST)
+        if not request.POST['nome']:
+            atividade_form.add_error('nome', 'Este campo é obrigatório')
+        if not request.POST['horario']:
+            atividade_form.add_error('horario', 'Este campo é obrigatório')
+        if atividade_form.is_valid():
+            a = atividade_form.save(commit=False)
+            a.dia = dia_atual
+            a.save()
+            return redirect(to='eventos:dias-atividades', slug=e.slug, dia=dia_atual, permanent=True)
+        context = {'user': user, 'evento': e,
+                   'dia_atual': dia_atual,
+                   'atividade_form': atividade_form}
+        return render(request, template_name, context)
+
+
+class EditarAtividade(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, dia, apk):
+        template_name = 'eventos/editar-atividade.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+        a = get_object_or_404(Atividade, pk=apk)
+        atividade_form = AtividadeForm(instance=a)
+        context = {'user': user, 'evento': e,
+                   'dia_atual': dia_atual,
+                   'atividade_form': atividade_form,
+                   'apk': a.pk}
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, dia, apk):
+        success_message = None
+        template_name = 'eventos/nova-atividade.html'
+        e = get_object_or_404(Evento, slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+        a = get_object_or_404(Atividade, pk=apk)
+        atividade_form = AtividadeForm(request.POST, instance=a)
+        if not request.POST['nome']:
+            atividade_form.add_error('nome', 'Este campo é obrigatório')
+        if not request.POST['horario']:
+            atividade_form.add_error('horario', 'Este campo é obrigatório')
+        if atividade_form.is_valid():
+            a = atividade_form.save(commit=False)
+            a.dia = dia_atual
+            a.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {'user': user, 'evento': e,
+                       'dia_atual': dia_atual,
+                       'atividade_form': atividade_form,
+                       'success_message': success_message}
+            return render(request, template_name, context)
+        context = {'user': user, 'evento': e,
+                   'dia_atual': dia_atual,
+                   'atividade_form': atividade_form}
+        return render(request, template_name, context)
+
+
+@login_required
+def palestrantes(request, slug):
+    template_name = 'eventos/listagem-palestrantes.html'
+    e = Evento.objects.get(slug=slug)
+    user = Organizador.objects.get(user=request.user)
+    p = Palestrante.objects.filter(evento=e)
+    context = {'user': user, 'evento': e, 'palestrantes': p}
+    return render(request, template_name, context)
+
+
+class NovoPalestrante(View):
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        template_name = 'eventos/novo-palestrante.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        p_form = PalestranteForm()
+        context = {'user': user, 'evento': e,
+                   'p_form': p_form}
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/novo-palestrante.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        p_form = PalestranteForm(request.POST, request.FILES)
+        if p_form.is_valid():
+            p = p_form.save(commit=False)
+            p.evento = e
+            p.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {
+                'user': user, 'evento': e,
+                'p_form': p_form,
+                'success_message': success_message
+            }
+            return redirect(to='eventos:palestrantes', slug=e.slug)
+        context = {'user': user, 'evento': e,
+                   'p_form': p_form}
+        return render(request, template_name, context)
+
+
+class EditarPalestrante(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, pk):
+        template_name = 'eventos/editar-palestrante.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        p = get_object_or_404(Palestrante, pk=pk)
+        p_form = PalestranteForm(instance=p)
+        context = {
+            'user': user, 'evento': e,
+            'p_form': p_form,
+            'pk': pk,
+            'p': p
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, pk):
+        success_message = None
+        template_name = 'eventos/editar-palestrante.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        p = get_object_or_404(Palestrante, pk=pk)
+        p_form = PalestranteForm(request.POST, request.FILES, instance=p)
+        if p_form.is_valid():
+            p = p_form.save(commit=False)
+            p.evento = e
+            p.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {
+                'user': user, 'evento': e,
+                'p_form': p_form,
+                'success_message': success_message,
+                'pk': pk,
+                'p': p
+            }
+            return render(request, template_name, context, success_message)
+        context = {'user': user, 'evento': e,
+                   'p_form': p_form}
         return render(request, template_name, context)

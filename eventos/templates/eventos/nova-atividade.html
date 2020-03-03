@@ -34,7 +34,7 @@
                             <i class="fas fa-arrow-left"></i>
                         </span>
                     </a>
-                    <span class="is-size-4">Editar Atividade</span>
+                    <span class="is-size-4">Nova Atividade</span>
                     <a class="link has-text-light is-invisible">
                         <span class="icon">
                             <i class="fas fa-arrow-right"></i>
@@ -43,7 +43,7 @@
                 </p>
 
                 <form method="POST" style="margin: 20px 10px;"
-                      action="{% url 'eventos:editar-atividade' slug=evento.slug dia=dia_atual apk=apk %}">
+                      action="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}">
                     {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">

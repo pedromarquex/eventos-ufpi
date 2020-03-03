@@ -2,7 +2,7 @@
 {% block title %}Meus Eventos{% endblock %}
 
 {% block content %}
-    <section class="hero is-light is-medium" style="min-height: 80vh;">
+    <section class="section has-background-grey-lighter" style="min-height: 80vh;">
         <div class="content container" id="main-container">
             <h1 class="title has-text-centered">Eventos de {{ user }}</h1>
             <div class="columns is-multiline">
@@ -124,7 +124,7 @@
                                             {% endif %}
                                             {% if evento.onde and evento.quando %}
                                                 <p class="subtitle is-6"><i
-                                                        class="fas fa-map-marker-alt"></i>{{ evento.onde }}<br>
+                                                        class="fas fa-map-marker-alt"></i> {{ evento.onde }}<br>
                                                     <i class="fas fa-clock"></i>
                                                     <time datetime="2016-1-1">{{ evento.quando }}</time>
                                                 </p>
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <footer class="card-footer">
-                                    <a href="{% url 'eventos:editar-evento-info' slug=evento.slug %}"
+                                    <a href="{% url 'eventos:editar-info' slug=evento.slug %}"
                                        class="card-footer-item">Editar</a>
                                 </footer>
                             </div>
