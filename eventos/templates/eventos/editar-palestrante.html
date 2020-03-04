@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <section class="section has-background-light" style="min-height: 90vh;">
+    <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         {% if success_message %}
             <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
                 <button class="delete"></button>
@@ -20,19 +20,19 @@
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
                     <li class="is-active"><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a>
                     </li>
-                    <li><a>Patrocinadores</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
                 </ul>
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
                 <p class="panel-heading has-text-centered" style="display: flex; justify-content: space-between;">
-                    <a class="link has-text-light">
+                    <a href="{% url 'eventos:palestrantes' slug=evento.slug %}" class="link has-text-light">
                         <span class="icon">
                             <i class="fas fa-arrow-left"></i>
                         </span>
                     </a>
-                    <span class="is-size-4">Novo Palestrante</span>
+                    <span class="is-size-4">Editar Palestrante</span>
                     <a class="link has-text-light is-invisible">
                         <span class="icon">
                             <i class="fas fa-arrow-right"></i>
@@ -77,7 +77,7 @@
                                                 <span class="file-icon">
                                                     <i class="fas fa-upload"></i>
                                                 </span>
-                                                <span class="file-label">Selecione um arquivo</span>
+{#                                                <span class="file-label">Selecione</span>#}
                                             </span>
                                         {% if p.foto %}
                                             <span class="file-name">{{ p.foto }}</span>

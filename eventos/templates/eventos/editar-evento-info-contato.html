@@ -20,7 +20,7 @@
                         Contatos</a></li>
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
-                    <li><a>Patrocinadores</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
                 </ul>
@@ -130,7 +130,7 @@
                                             <span class="file-icon">
                                                 <i class="fas fa-upload"></i>
                                             </span>
-                                            <span class="file-label">Selecione um arquivo</span>
+                                            <span class="file-label">Selecione</span>
                                         </span>
                                             <span class="file-name">
                                             {% if evento.banner %}
@@ -150,7 +150,7 @@
                                             <span class="file-icon">
                                                 <i class="fas fa-upload"></i>
                                             </span>
-                                            <span class="file-label">Selecione um arquivo</span>
+{#                                            <span class="file-label">Selecione</span>#}
                                         </span>
                                             <span class="file-name">
                                             {% if evento.banner %}

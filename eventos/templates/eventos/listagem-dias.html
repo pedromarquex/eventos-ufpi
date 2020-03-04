@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <section class="section has-background-light" style="min-height: 90vh;">
+    <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento.nome }}</span>
@@ -12,7 +12,7 @@
                     <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e Contatos</a></li>
                     <li class="is-active"><a>Dias de Eventos</a></li>
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
-                    <li><a>Patrocinadores</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li><a>Realizadores</a></li>
                     <li><a>Apoiadores</a></li>
                 </ul>

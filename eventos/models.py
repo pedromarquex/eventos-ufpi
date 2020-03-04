@@ -92,20 +92,20 @@ class Palestrante(models.Model):
 
 
 class Patrocinador(models.Model):
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
     nome = models.CharField(max_length=150)
     link = models.CharField(max_length=150, null=True, blank=True)
-    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
+    evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nome
 
 
 class Realizador(models.Model):
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
     nome = models.CharField(max_length=150)
     link = models.CharField(max_length=150, null=True, blank=True)
-    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
+    evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nome
@@ -115,7 +115,7 @@ class Apoiador(models.Model):
     foto = models.ImageField()
     nome = models.CharField(max_length=150)
     link = models.CharField(max_length=150, null=True, blank=True)
-    evento = models.OneToOneField(Evento, on_delete=models.SET_NULL, null=True, blank=True)
+    evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nome

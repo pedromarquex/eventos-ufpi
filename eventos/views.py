@@ -6,9 +6,9 @@ from django.views import View
 
 from organizador.models import Organizador
 from administrador.models import Administrador
-from .models import Evento, Dia, Atividade, Palestrante
+from .models import Evento, Dia, Atividade, Palestrante, Patrocinador
 
-from .forms import EventoForm, AtividadeForm, PalestranteForm
+from .forms import EventoForm, AtividadeForm, PalestranteForm, PatrocinadorForm
 
 
 class Index(View):
@@ -222,25 +222,106 @@ class EditarPalestrante(View):
 
     @method_decorator(login_required)
     def post(self, request, slug, pk):
-        success_message = None
         template_name = 'eventos/editar-palestrante.html'
         e = Evento.objects.get(slug=slug)
         user = Organizador.objects.get(user=request.user)
         p = get_object_or_404(Palestrante, pk=pk)
         p_form = PalestranteForm(request.POST, request.FILES, instance=p)
         if p_form.is_valid():
-            p = p_form.save(commit=False)
-            p.evento = e
             p.save()
             success_message = 'Informações salvas com sucesso!'
             context = {
-                'user': user, 'evento': e,
+                'user': user,
+                'evento': e,
                 'p_form': p_form,
                 'success_message': success_message,
                 'pk': pk,
                 'p': p
             }
             return render(request, template_name, context, success_message)
+        context = {'user': user, 'evento': e,
+                   'p_form': p_form}
+        return render(request, template_name, context)
+
+
+@login_required
+def patrocinadores(request, slug):
+    template_name = 'eventos/listagem-patrocinadores.html'
+    e = Evento.objects.get(slug=slug)
+    user = Organizador.objects.get(user=request.user)
+    p = Patrocinador.objects.filter(evento=e)
+    context = {'user': user, 'evento': e, 'patrocinadores': p}
+    return render(request, template_name, context)
+
+
+class EditarPatrocinador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, pk):
+        template_name = 'eventos/editar-patrocinador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        p = get_object_or_404(Patrocinador, pk=pk)
+        p_form = PatrocinadorForm(instance=p)
+        context = {
+            'user': user,
+            'evento': e,
+            'p_form': p_form,
+            'pk': pk,
+            'p': p
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, pk):
+        template_name = 'eventos/editar-patrocinador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        p = get_object_or_404(Patrocinador, pk=pk)
+        p_form = PatrocinadorForm(request.POST, request.FILES, instance=p)
+        if p_form.is_valid():
+            p = p_form.save(commit=False)
+            p.evento = e
+            p.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {
+                'user': user,
+                'evento': e,
+                'p_form': p_form,
+                'success_message': success_message,
+                'pk': pk,
+                'p': p
+            }
+            return render(request, template_name, context, success_message)
+        context = {'user': user, 'evento': e,
+                   'p_form': p_form}
+        return render(request, template_name, context)
+
+
+class NovoPatrocinador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        template_name = 'eventos/novo-patrocinador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        p_form = PatrocinadorForm()
+        context = {
+            'user': user,
+            'evento': e,
+            'p_form': p_form,
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/editar-patrocinador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        p_form = PatrocinadorForm(request.POST, request.FILES)
+        if p_form.is_valid():
+            p = p_form.save(commit=False)
+            p.evento = e
+            p.save()
+            return redirect(to='eventos:patrocinadores', slug=slug)
         context = {'user': user, 'evento': e,
                    'p_form': p_form}
         return render(request, template_name, context)

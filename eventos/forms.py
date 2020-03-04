@@ -46,15 +46,27 @@ class PatrocinadorForm(ModelForm):
     class Meta:
         model = Patrocinador
         fields = '__all__'
+        exclude = ['evento']
+        widgets = {
+            'foto': FileInput()
+        }
 
 
 class RealizadorForm(ModelForm):
     class Meta:
         model = Realizador
         fields = '__all__'
+        exclude = ['evento']
+        widgets = {
+            'foto': FileInput()
+        }
 
 
 class ApoiadorForm(ModelForm):
     class Meta:
         model = Apoiador
         fields = '__all__'
+        exclude = ['evento']
+        widgets = {
+            'foto': FileInput()
+        }
