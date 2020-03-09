@@ -6,9 +6,9 @@ from django.views import View
 
 from organizador.models import Organizador
 from administrador.models import Administrador
-from .models import Evento, Dia, Atividade, Palestrante, Patrocinador
+from .models import Evento, Dia, Atividade, Palestrante, Patrocinador, Realizador, Apoiador
 
-from .forms import EventoForm, AtividadeForm, PalestranteForm, PatrocinadorForm
+from .forms import EventoForm, AtividadeForm, PalestranteForm, PatrocinadorForm, RealizadorForm, ApoiadorForm
 
 
 class Index(View):
@@ -325,3 +325,169 @@ class NovoPatrocinador(View):
         context = {'user': user, 'evento': e,
                    'p_form': p_form}
         return render(request, template_name, context)
+
+
+@login_required
+def realizadores(request, slug):
+    template_name = 'eventos/listagem-realizadores.html'
+    e = Evento.objects.get(slug=slug)
+    user = Organizador.objects.get(user=request.user)
+    r = Realizador.objects.filter(evento=e)
+    context = {'user': user, 'evento': e, 'realizadores': r}
+    return render(request, template_name, context)
+
+
+class EditarRealizador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, pk):
+        template_name = 'eventos/editar-realizador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        r = get_object_or_404(Realizador, pk=pk)
+        r_form = RealizadorForm(instance=r)
+        context = {
+            'user': user,
+            'evento': e,
+            'r_form': r_form,
+            'pk': pk,
+            'r': r
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, pk):
+        template_name = 'eventos/editar-realizador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        r = get_object_or_404(Realizador, pk=pk)
+        r_form = RealizadorForm(request.POST, request.FILES, instance=r)
+        if r_form.is_valid():
+            r.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {
+                'user': user,
+                'evento': e,
+                'r_form': r_form,
+                'success_message': success_message,
+                'pk': pk,
+                'r': r
+            }
+            return render(request, template_name, context, success_message)
+        context = {'user': user, 'evento': e,
+                   'p_form': r_form}
+        return render(request, template_name, context)
+
+
+class NovoRealizador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        template_name = 'eventos/novo-realizador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        r_form = RealizadorForm()
+        context = {
+            'user': user,
+            'evento': e,
+            'r_form': r_form,
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/novo-realizador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        r_form = RealizadorForm(request.POST, request.FILES)
+        if r_form.is_valid():
+            r = r_form.save(commit=False)
+            r.evento = e
+            r.save()
+            return redirect(to='eventos:realizadores', slug=slug)
+        context = {'user': user, 'evento': e,
+                   'r_form': r_form}
+        return render(request, template_name, context)
+
+
+@login_required
+def apoiadores(request, slug):
+    template_name = 'eventos/listagem-apoiadores.html'
+    e = Evento.objects.get(slug=slug)
+    user = Organizador.objects.get(user=request.user)
+    a = Apoiador.objects.filter(evento=e)
+    context = {'user': user, 'evento': e, 'apoiadores': a}
+    return render(request, template_name, context)
+
+
+class EditarApoiador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, pk):
+        template_name = 'eventos/editar-apoiador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        a = get_object_or_404(Apoiador, pk=pk)
+        a_form = RealizadorForm(instance=a)
+        context = {
+            'user': user,
+            'evento': e,
+            'a_form': a_form,
+            'pk': pk,
+            'a': a
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug, pk):
+        template_name = 'eventos/editar-apoiador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        a = get_object_or_404(Apoiador, pk=pk)
+        a_form = ApoiadorForm(request.POST, request.FILES, instance=a)
+        if a_form.is_valid():
+            a.save()
+            success_message = 'Informações salvas com sucesso!'
+            context = {
+                'user': user,
+                'evento': e,
+                'a_form': a_form,
+                'success_message': success_message,
+                'pk': pk,
+                'a': a
+            }
+            return render(request, template_name, context, success_message)
+        context = {'user': user, 'evento': e,
+                   'p_form': a_form}
+        return render(request, template_name, context)
+
+
+class NovoApoiador(View):
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        template_name = 'eventos/novo-apoiador.html'
+        user = Organizador.objects.get(user=request.user)
+        e = Evento.objects.get(slug=slug)
+        a_form = ApoiadorForm()
+        context = {
+            'user': user,
+            'evento': e,
+            'a_form': a_form,
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/novo-apoiador.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        a_form = ApoiadorForm(request.POST, request.FILES)
+        if a_form.is_valid():
+            a = a_form.save(commit=False)
+            a.evento = e
+            a.save()
+            return redirect(to='eventos:apoiadores', slug=slug)
+        context = {'user': user, 'evento': e,
+                   'r_form': a_form}
+        return render(request, template_name, context)
+
+
+def excluir_apoiador(request, pk):
+    pass

@@ -22,8 +22,8 @@
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
                     <li class="is-active"><a
                             href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
-                    <li><a>Realizadores</a></li>
-                    <li><a>Apoiadores</a></li>
+                    <li><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
+                    <li><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
                 </ul>
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">

@@ -4,12 +4,6 @@
 
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
-        {% if success_message %}
-            <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
-                <button class="delete"></button>
-                <strong>{{ success_message }}</strong>
-            </div>
-        {% endif %}
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento }}</span>
@@ -20,20 +14,19 @@
                     <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e Contatos</a></li>
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
-                    <li class="is-active"><a
-                            href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
-                    <li><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
+                    <li class="is-active"><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
                 </ul>
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
                 <p class="panel-heading has-text-centered" style="display: flex; justify-content: space-between;">
-                    <a href="{% url 'eventos:patrocinadores' slug=evento.slug %}" class="link has-text-light">
+                    <a href="{% url 'eventos:realizadores' slug=evento.slug %}" class="link has-text-light">
                         <span class="icon">
                             <i class="fas fa-arrow-left"></i>
                         </span>
                     </a>
-                    <span class="is-size-4">Novo Patrocinador</span>
+                    <span class="is-size-4">Novo Apoiador</span>
                     <a class="link has-text-light is-invisible">
                         <span class="icon">
                             <i class="fas fa-arrow-right"></i>
@@ -50,7 +43,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field p_form.nome class="input" placeholder="Nome do patrocinador" %}
+                                    {% render_field a_form.nome class="input" placeholder="Nome do realizador" %}
                                     {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
@@ -67,7 +60,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field p_form.link class="input" placeholder="LinkedIn, Facebook, Homepage..." %}
+                                    {% render_field a_form.link class="input" placeholder="LinkedIn, Facebook, Homepage..." %}
                                     {#                                    <input class="input" type="url" placeholder="LinkedIn, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-link"></i>
@@ -86,7 +79,7 @@
                                 <p class="control has-icons-left">
                                 <div id="file-js-example" class="file has-name is-fullwidth">
                                     <label class="file-label">
-                                        {% render_field p_form.foto class="file-input" name="resume" %}
+                                        {% render_field a_form.foto class="file-input" name="resume" %}
                                         {#                                        <input class="file-input" type="file" name="resume">#}
                                         <span class="file-cta">
                                                 <span class="file-icon">
@@ -95,8 +88,8 @@
 {#                                                    <span class="file-label">Selecionar</span>#}
                                             </span>
                                         <span class="file-name">
-                                            {% if p.foto %}
-                                                <span class="file-label">{{ p.foto.name }}</span>
+                                            {% if a.foto %}
+                                                <span class="file-label">{{ a.foto.name }}</span>
                                             {% else %}
                                                 <span class="file-label">Nenhum Arquivo Selecionado</span>
                                             {% endif %}
@@ -136,16 +129,6 @@
                 fileName.textContent = fileInput.files[0].name;
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-                $notification = $delete.parentNode;
-
-                $delete.addEventListener('click', () => {
-                    $notification.parentNode.removeChild($notification);
-                });
-            });
-        });
     </script>
 
 {% endblock %}

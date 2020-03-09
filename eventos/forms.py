@@ -36,7 +36,7 @@ class PalestranteForm(ModelForm):
     class Meta:
         model = Palestrante
         fields = '__all__'
-        exclude = ['evento']
+        exclude = ['evento', 'atividade']
         widgets = {
             'foto': FileInput()
         }

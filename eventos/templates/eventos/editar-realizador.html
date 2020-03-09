@@ -20,20 +20,19 @@
                     <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e Contatos</a></li>
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
-                    <li class="is-active"><a
-                            href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
-                    <li><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
+                    <li  class="is-active"><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
                     <li><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
                 </ul>
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
                 <p class="panel-heading has-text-centered" style="display: flex; justify-content: space-between;">
-                    <a href="{% url 'eventos:patrocinadores' slug=evento.slug %}" class="link has-text-light">
+                    <a href="{% url 'eventos:realizadores' slug=evento.slug %}" class="link has-text-light">
                         <span class="icon">
                             <i class="fas fa-arrow-left"></i>
                         </span>
                     </a>
-                    <span class="is-size-4">Novo Patrocinador</span>
+                    <span class="is-size-4">Editar Realizador</span>
                     <a class="link has-text-light is-invisible">
                         <span class="icon">
                             <i class="fas fa-arrow-right"></i>
@@ -50,7 +49,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field p_form.nome class="input" placeholder="Nome do patrocinador" %}
+                                    {% render_field r_form.nome class="input" placeholder="Nome do patrocinador" %}
                                     {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
@@ -67,7 +66,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field p_form.link class="input" placeholder="LinkedIn, Facebook, Homepage..." %}
+                                    {% render_field r_form.link class="input" placeholder="LinkedIn, Facebook, Homepage..." %}
                                     {#                                    <input class="input" type="url" placeholder="LinkedIn, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-link"></i>
@@ -86,7 +85,7 @@
                                 <p class="control has-icons-left">
                                 <div id="file-js-example" class="file has-name is-fullwidth">
                                     <label class="file-label">
-                                        {% render_field p_form.foto class="file-input" name="resume" %}
+                                        {% render_field r_form.foto class="file-input" name="resume" %}
                                         {#                                        <input class="file-input" type="file" name="resume">#}
                                         <span class="file-cta">
                                                 <span class="file-icon">
@@ -95,8 +94,8 @@
 {#                                                    <span class="file-label">Selecionar</span>#}
                                             </span>
                                         <span class="file-name">
-                                            {% if p.foto %}
-                                                <span class="file-label">{{ p.foto.name }}</span>
+                                            {% if r.foto %}
+                                                <span class="file-label">{{ r.foto.name }}</span>
                                             {% else %}
                                                 <span class="file-label">Nenhum Arquivo Selecionado</span>
                                             {% endif %}

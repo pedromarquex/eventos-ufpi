@@ -112,7 +112,7 @@ class Realizador(models.Model):
 
 
 class Apoiador(models.Model):
-    foto = models.ImageField()
+    foto = models.ImageField(null=True, blank=True)
     nome = models.CharField(max_length=150)
     link = models.CharField(max_length=150, null=True, blank=True)
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)

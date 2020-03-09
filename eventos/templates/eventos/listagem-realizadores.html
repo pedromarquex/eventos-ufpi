@@ -13,19 +13,19 @@
                     <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e Contatos</a></li>
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
                     <li><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
+                    <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li class="is-active"><a
-                            href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
-                    <li><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
+                            href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
                     <li><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
                 </ul>
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto; padding-bottom: 8px;">
                 <p class="panel-heading is-size-4"></p>
 
-                {% for p in patrocinadores %}
+                {% for r in realizadores %}
                     <a class="panel-block is-active"
-                       href="{% url 'eventos:editar-patrocinador' slug=evento.slug pk=p.pk %}">
-                        <span>{{ p.nome }}</span>
+                       href="{% url 'eventos:editar-realizador' slug=evento.slug pk=r.pk %}">
+                        <span>{{ r.nome }}</span>
                         <object style="margin-left: auto;">
                             <a class="button is-outlined is-small is-danger" style="height: 20px;">
                             <span class="icon">
@@ -35,7 +35,7 @@
                         </object>
                     </a>
                 {% endfor %}
-                <a href="{% url 'eventos:novo-patrocinador' slug=evento.slug %}"
+                <a href="{% url 'eventos:novo-realizador' slug=evento.slug %}"
                    class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
                     <span class="panel-icon">
                         <i class="fas fa-plus" aria-hidden="true"></i>
