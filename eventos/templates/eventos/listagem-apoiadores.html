@@ -27,8 +27,8 @@
                         <span>{{ a.nome }}</span>
                         <object style="margin-left: auto;">
                             <a class="button is-outlined is-small is-danger" style="height: 20px;"
-                               onclick="get_confirmation('Deseja realmente excluir {{ a }}?')"
-                               href="{% url 'eventos:excluir-apoiador' pk=a.pk %}">
+                               onclick="return get_confirmation('Deseja realmente excluir {{ a }}?')"
+                               href="{% url 'eventos:excluir-apoiador' slug=evento.slug pk=a.pk %}">
                             <span class="icon">
                                 <i class="fas fa-trash"></i>
                             </span>

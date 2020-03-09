@@ -27,7 +27,10 @@
                        href="{% url 'eventos:editar-patrocinador' slug=evento.slug pk=p.pk %}">
                         <span>{{ p.nome }}</span>
                         <object style="margin-left: auto;">
-                            <a class="button is-outlined is-small is-danger" style="height: 20px;">
+                            <a class="button is-outlined is-small is-danger"
+                               href="{% url 'eventos:excluir-patrocinador' slug=evento.slug pk=p.pk %}"
+                               onclick="return get_confirmation('Deseja realmente excluir {{ p.nome }}?')"
+                               style="height: 20px;">
                             <span class="icon">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -45,5 +48,12 @@
             </article>
         </div>
     </section>
+
+    <script>
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
+        }
+    </script>
 
 {% endblock %}

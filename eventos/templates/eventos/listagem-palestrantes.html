@@ -6,14 +6,14 @@
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento.nome }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
                     <li><a href="{% url 'eventos:editar-info' slug=evento.slug %}">Infos e
                         Contatos</a></li>
                     <li><a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=1 %}">Dias de Eventos</a></li>
-                    <li class="is-active"><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a></li>
+                    <li class="is-active"><a href="{% url 'eventos:palestrantes' slug=evento.slug %}">Palestrantes</a>
+                    </li>
                     <li><a href="{% url 'eventos:patrocinadores' slug=evento.slug %}">Patrocinadores</a></li>
                     <li><a href="{% url 'eventos:realizadores' slug=evento.slug %}">Realizadores</a></li>
                     <li><a href="{% url 'eventos:apoiadores' slug=evento.slug %}">Apoiadores</a></li>
@@ -21,92 +21,29 @@
             </div>
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto; padding-bottom: 8px;">
                 <p class="panel-heading is-size-4"></p>
-                <!-- <a class="is-active">Dia 1</a>
-                    <a>Dia 2</a>
-                    <a>Dia 3</a>
-                    <a>Dia 4</a>
-                    <a>Dia 5</a>
-                    <a class="has-text-dark">
-                        <span class="icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Adicionar</span>
-                    </a> -->
                 {% for p in palestrantes %}
-                    <a class="panel-block is-active" href="{% url 'eventos:editar-palestrante' slug=evento.slug pk=p.pk %}">
+                    <a class="panel-block is-active"
+                       href="{% url 'eventos:editar-palestrante' slug=evento.slug pk=p.pk %}">
 
-                    <figure class="image is-64x64" style="margin-right: 20px;">
-                        <img class="is-rounded" src="{{ p.foto.url }}">
-                    </figure>
-                    <span>{{ p.nome }}</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
+                        <figure class="image is-64x64" style="margin-right: 20px;">
+                            <img class="is-rounded" src="{{ p.foto.url }}">
+                        </figure>
+                        <span>{{ p.nome }}</span>
+                        <object style="margin-left: auto;">
+                            <a class="button is-outlined is-small is-danger"
+                               href="{% url 'eventos:excluir-palestrante' slug=evento.slug pk=p.pk %}"
+                               onclick="return get_confirmation('Deseja realmente excluir {{ p.nome }}?')"
+                               style="height: 20px;">
                             <span class="icon">
                                 <i class="fas fa-trash"></i>
                             </span>
-                        </a>
-                    </object>
-                </a>
+                            </a>
+                        </object>
+                    </a>
                 {% endfor %}
 
-                <a class="panel-block is-active">
-
-                    <figure class="image is-64x64" style="margin-right: 20px;">
-                        <img class="is-rounded" src="https://avatars2.githubusercontent.com/u/2254731?v=4">
-                    </figure>
-                    <span>Diego Fernandes</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
-                            <span class="icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
-                    </object>
-                </a>
-                <a class="panel-block is-active">
-
-                    <figure class="image is-64x64" style="margin-right: 20px;">
-                        <img class="is-rounded" src="https://avatars1.githubusercontent.com/u/2840?v=4">
-                    </figure>
-                    <span>Fábio Akita</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
-                            <span class="icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
-                    </object>
-                </a>
-                <a class="panel-block is-active">
-
-                    <figure class="image is-64x64" style="margin-right: 20px;">
-                        <img class="is-rounded" src="https://avatars0.githubusercontent.com/u/4248081?v=4">
-                    </figure>
-                    <span>Filipe Deschamps</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
-                            <span class="icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
-                    </object>
-                </a>
-                <!-- <a class="panel-block is-active">
-                    <span class="panel-icon">
-                        <i class="fas fa-clock"></i>
-                    </span>
-                    <span class="has-text-info is-size-7" style="margin-right: 10px;">10:00 AM</span>
-                    <span>Keynote: Introdução a RESTFull APIS com Node</span>
-                    <object style="margin-left: auto;">
-                        <a class="button is-outlined is-small is-danger" style="height: 20px;">
-                            <span class="icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
-                    </object>
-                </a> -->
                 <a href="{% url 'eventos:novo-palestrante' slug=evento.slug %}"
-                        class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
+                   class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
                     <span class="panel-icon">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                     </span>
@@ -115,5 +52,12 @@
             </article>
         </div>
     </section>
+
+    <script>
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
+        }
+    </script>
 
 {% endblock %}

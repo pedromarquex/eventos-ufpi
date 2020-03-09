@@ -134,7 +134,6 @@ class EditarAtividade(View):
 
     @method_decorator(login_required)
     def post(self, request, slug, dia, apk):
-        success_message = None
         template_name = 'eventos/nova-atividade.html'
         e = get_object_or_404(Evento, slug=slug)
         user = Organizador.objects.get(user=request.user)
@@ -159,6 +158,16 @@ class EditarAtividade(View):
                    'dia_atual': dia_atual,
                    'atividade_form': atividade_form}
         return render(request, template_name, context)
+
+
+@login_required
+def exclui_atividade(request, slug, pk, dia):
+    try:
+        a = Atividade.objects.get(pk=pk)
+        a.delete()
+        return redirect(to='eventos:dias-atividades', slug=slug, dia=dia)
+    except Exception:
+        return redirect(to='eventos:dias-atividades', slug=slug, dia=dia)
 
 
 @login_required
@@ -192,12 +201,6 @@ class NovoPalestrante(View):
             p = p_form.save(commit=False)
             p.evento = e
             p.save()
-            success_message = 'Informações salvas com sucesso!'
-            context = {
-                'user': user, 'evento': e,
-                'p_form': p_form,
-                'success_message': success_message
-            }
             return redirect(to='eventos:palestrantes', slug=e.slug)
         context = {'user': user, 'evento': e,
                    'p_form': p_form}
@@ -242,6 +245,16 @@ class EditarPalestrante(View):
         context = {'user': user, 'evento': e,
                    'p_form': p_form}
         return render(request, template_name, context)
+
+
+@login_required
+def exclui_palestrante(request, slug, pk):
+    try:
+        p = Palestrante.objects.get(pk=pk)
+        p.delete()
+        return redirect(to='eventos:palestrantes', slug=slug)
+    except Exception:
+        return redirect(to='eventos:palestrantes', slug=slug)
 
 
 @login_required
@@ -328,6 +341,16 @@ class NovoPatrocinador(View):
 
 
 @login_required
+def exclui_patrocinador(request, slug, pk):
+    try:
+        p = Patrocinador.objects.get(pk=pk)
+        p.delete()
+        return redirect(to='eventos:patrocinadores', slug=slug)
+    except Exception:
+        return redirect(to='eventos:patrocinadores', slug=slug)
+
+
+@login_required
 def realizadores(request, slug):
     template_name = 'eventos/listagem-realizadores.html'
     e = Evento.objects.get(slug=slug)
@@ -406,6 +429,16 @@ class NovoRealizador(View):
         context = {'user': user, 'evento': e,
                    'r_form': r_form}
         return render(request, template_name, context)
+
+
+@login_required
+def exclui_realizador(request, slug, pk):
+    try:
+        r = Realizador.objects.get(pk=pk)
+        r.delete()
+        return redirect(to='eventos:realizadores', slug=slug)
+    except Exception:
+        return redirect(to='eventos:realizadores', slug=slug)
 
 
 @login_required
@@ -489,5 +522,11 @@ class NovoApoiador(View):
         return render(request, template_name, context)
 
 
-def excluir_apoiador(request, pk):
-    pass
+@login_required
+def exclui_apoiador(request, slug, pk):
+    try:
+        a = Apoiador.objects.get(pk=pk)
+        a.delete()
+        return redirect(to='eventos:apoiadores', slug=slug)
+    except Exception:
+        return redirect(to='eventos:apoiadores', slug=slug)

@@ -59,14 +59,18 @@
                         <span>Adicionar</span>
                     </a> -->
                 {% for a in atividades %}
-                    <a href="{% url 'eventos:editar-atividade' slug=evento.slug dia=dia_atual apk=a.pk %}" class="panel-block is-active">
+                    <a href="{% url 'eventos:editar-atividade' slug=evento.slug dia=dia_atual apk=a.pk %}"
+                       class="panel-block is-active">
                     <span class="panel-icon">
                         <i class="fas fa-clock"></i>
                     </span>
                         <span class="has-text-info is-size-7" style="margin-right: 10px;">{{ a.horario }}</span>
                         <span>{{ a.nome }}</span>
                         <object style="margin-left: auto;">
-                            <a href="#" class="button is-outlined is-small is-danger" style="height: 20px;">
+                            <a href="{% url 'eventos:exclui-atividade' slug=evento.slug pk=a.pk dia=dia_atual.dia %}"
+                               class="button is-outlined is-small is-danger"
+                               onclick="return get_confirmation('Deseja realmente excluir {{ a.nome }}?')"
+                               style="height: 20px;">
                             <span class="icon">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -86,12 +90,9 @@
     </section>
 
     <script>
-        const fileInput = document.querySelector('#file-js-example input[type=file]');
-        fileInput.onchange = () => {
-            if (fileInput.files.length > 0) {
-                const fileName = document.querySelector('#file-js-example .file-name');
-                fileName.textContent = fileInput.files[0].name;
-            }
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
         }
     </script>
 
