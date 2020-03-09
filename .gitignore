@@ -12,6 +12,18 @@
 /media/perfil/palestrante/*.png
 /media/perfil/palestrante/*.jpg
 
+/media/*.png
+/media/*.jpg
+
+media/apoiadores/banner/*.jpg
+media/apoiadores/banner/*.png
+
+media/patrocinadores/banner/*.jpg
+media/patrocinadores/banner/*.png
+
+media/realizadores/banner/*.jpg
+media/realizadores/banner/*.png
+
 # Enviroment
 /venv
 eventos_ufpi/.env
