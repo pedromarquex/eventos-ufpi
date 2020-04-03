@@ -124,8 +124,12 @@ class EditarDia(View):
         dia = Dia.objects.get(dia=pk)
         user = Organizador.objects.get(user=request.user)
         dia_form = DiaForm(instance=dia)
-        context = {'user': user, 'evento': e,
-                   'dia_form': dia_form}
+        context = {
+            'user': user,
+            'evento': e,
+            'dia_form': dia_form,
+            'dia': dia
+        }
         return render(request, template_name, context)
 
     @method_decorator(login_required)
@@ -160,12 +164,27 @@ class EditarDia(View):
                 'user': user,
                 'evento': e,
                 'dia_form': dia_form,
+                'dia': d,
                 'mensagem_sucesso': mensagem_sucesso
             }
             return render(request, template_name, context)
-        context = {'user': user, 'evento': e,
-                   'dia_form': dia_form}
+        context = {
+            'user': user,
+            'evento': e,
+            'dia_form': dia_form,
+            'dia': d
+        }
         return render(request, template_name, context)
+
+
+@login_required
+def exclui_dia(request, slug, pk):
+    try:
+        d = Dia.objects.get(pk=pk)
+        d.delete()
+        return redirect(to='eventos:dias-atividades', slug=slug, dia=1)
+    except:
+        return redirect(to='eventos:dias-atividades', slug=slug, dia=1)
 
 
 class NovaAtividade(View):

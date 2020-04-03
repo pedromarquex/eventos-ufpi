@@ -36,6 +36,7 @@
                     </a>
                     <span class="is-size-4">Editar Dia</span>
                     <a class="link has-text-danger"
+                       href="{% url 'eventos:excluir-dia' slug=evento.slug pk=dia.pk %}"
                        onclick="return get_confirmation('Deseja realmente excluir este dia de evento?')">
                         <span class="icon">
                             <i class="fas fa-trash"></i>
