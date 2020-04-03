@@ -119,7 +119,7 @@ class NovoDia(View):
 class EditarDia(View):
     @method_decorator(login_required)
     def get(self, request, slug, pk):
-        template_name = 'eventos/novo-dia.html'
+        template_name = 'eventos/editar-dia.html'
         e = Evento.objects.get(slug=slug)
         dia = Dia.objects.get(dia=pk)
         user = Organizador.objects.get(user=request.user)
@@ -129,11 +129,24 @@ class EditarDia(View):
         return render(request, template_name, context)
 
     @method_decorator(login_required)
-    def post(self, request, slug):
-        template_name = 'eventos/novo-dia.html'
+    def post(self, request, slug, pk):
+        dia_existe = None
+        mensagem_sucesso = None
+        template_name = 'eventos/editar-dia.html'
         e = get_object_or_404(Evento, slug=slug)
         user = Organizador.objects.get(user=request.user)
-        dia_form = DiaForm(request.POST)
+
+        # verificando se o dia de evento já está ocupado
+        dia = int(request.POST['dia'])
+        try:
+            dia_existe = Dia.objects.get(dia=dia, evento=e)
+        except:
+            pass
+
+        d = Dia.objects.get(pk=pk)
+        dia_form = DiaForm(request.POST, instance=d)
+        if dia_existe and dia != d.dia:
+            dia_form.add_error('dia', 'Este dia de evento já está cadastrado')
         if not request.POST['dia']:
             dia_form.add_error('dia', 'Este campo é obrigatório')
         if not request.POST['data']:
@@ -142,7 +155,14 @@ class EditarDia(View):
             d = dia_form.save(commit=False)
             d.evento = e
             d.save()
-            return redirect(to='eventos:dias-atividades', slug=e.slug, dia=1, permanent=True)
+            mensagem_sucesso = 'Informações alteradas com sucesso!'
+            context = {
+                'user': user,
+                'evento': e,
+                'dia_form': dia_form,
+                'mensagem_sucesso': mensagem_sucesso
+            }
+            return render(request, template_name, context)
         context = {'user': user, 'evento': e,
                    'dia_form': dia_form}
         return render(request, template_name, context)

@@ -65,19 +65,20 @@
                     </a>
                 {% endfor %}
                 <div class="btns">
-                        <a class="button is-dark is-outlined" style="width: 300px;">
+                    <a href="{% url 'eventos:editar-dia' slug=evento.slug pk=dia_atual.pk %}"
+                       class="button is-dark is-outlined" style="width: 300px;">
                             <span class="panel-icon">
                                 <i class="fas fa-pen" aria-hidden="true"></i>
                             </span>
-                            <span class="has-text-centered">Editar Dia</span>
-                        </a>
-                        <a href="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}"
-                           class="button is-dark is-outlined" style="width: 300px;">
+                        <span class="has-text-centered">Editar Dia</span>
+                    </a>
+                    <a href="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}"
+                       class="button is-dark is-outlined" style="width: 300px;">
                             <span class="panel-icon">
                                 <i class="fas fa-plus" aria-hidden="true"></i>
                             </span>
-                            <span class="has-text-centered">Nova Atividade</span>
-                        </a>
+                        <span class="has-text-centered">Nova Atividade</span>
+                    </a>
                 </div>
             </article>
         </div>

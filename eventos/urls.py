@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import Index
 from .views import EditarEventoInfo
-from .views import dias_atividades, NovaAtividade, EditarAtividade, exclui_atividade, NovoDia
+from .views import dias_atividades, NovaAtividade, EditarAtividade, exclui_atividade, NovoDia, EditarDia
 from .views import palestrantes, NovoPalestrante, EditarPalestrante, exclui_palestrante
 from .views import patrocinadores, NovoPatrocinador, EditarPatrocinador, exclui_patrocinador
 from .views import realizadores, NovoRealizador, EditarRealizador, exclui_realizador
@@ -20,6 +20,7 @@ urlpatterns = [
     # dias de evento e atividades
     path('<slug:slug>/editar/dia/<int:dia>', dias_atividades, name='dias-atividades'),
     path('<slug:slug>/novo-dia', NovoDia.as_view(), name='novo-dia'),
+    path('<slug:slug>/editar-dia/<int:pk>', EditarDia.as_view(), name='editar-dia'),
     path('<slug:slug>/dia/<int:dia>/nova-atividade', NovaAtividade.as_view(),
          name='nova-atividade'),
     path('<slug:slug>/dia/<int:dia>/editar-atividade/<int:apk>', EditarAtividade.as_view(),

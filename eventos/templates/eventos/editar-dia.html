@@ -4,6 +4,12 @@
 
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
+        {% if mensagem_sucesso %}
+            <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
+                <button class="delete"></button>
+                <strong>{{ mensagem_sucesso }}</strong>
+            </div>
+        {% endif %}
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento }}</span>
@@ -28,15 +34,16 @@
                             <i class="fas fa-arrow-left"></i>
                         </span>
                     </a>
-                    <span class="is-size-4">Novo Dia</span>
-                    <a class="link has-text-light is-invisible">
+                    <span class="is-size-4">Editar Dia</span>
+                    <a class="link has-text-danger"
+                       onclick="return get_confirmation('Deseja realmente excluir este dia de evento?')">
                         <span class="icon">
-                            <i class="fas fa-arrow-right"></i>
+                            <i class="fas fa-trash"></i>
                         </span>
                     </a>
                 </p>
 
-                <form method="POST" enctype="multipart/form-data" style="margin: 20px 10px;">
+                <form method="POST" style="margin: 20px 10px;">
                     {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -44,13 +51,26 @@
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field dia_form.dia class="input" placeholder="Ordem nos dias de eventos" %}
-                                    {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-list-ol"></i>
-                                    </span>
-                                </p>
+                                {% if dia_form.dia.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field dia_form.dia class="input is-danger" placeholder="Ordem nos dias de eventos" %}
+                                        {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-list-ol"></i>
+                                        </span>
+                                    </p>
+                                    {% for error in dia_form.dia.errors %}
+                                        <p class="help is-danger">{{ error }}</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field dia_form.dia class="input" placeholder="Ordem nos dias de eventos" %}
+                                        {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-list-ol"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -109,4 +129,20 @@
         </div>
     </section>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
+        }
+    </script>
 {% endblock %}
