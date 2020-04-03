@@ -23,41 +23,27 @@
                     <ul>
                         {% for d in dias %}
                             {% if d.dia == dia_atual.dia %}
-                                <li class="is-active"><a
-                                        href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">{{ d.data }}
-                                </a>
+                                <li class="is-active">
+                                    <a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">
+                                        {{ d.data }}
+                                    </a>
                                 </li>
                             {% else %}
-                                <li><a
-                                        href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">{{ d.data }}
-                                </a>
+                                <li>
+                                    <a href="{% url 'eventos:dias-atividades' slug=evento.slug dia=d.dia %}">
+                                        {{ d.data }}
+                                    </a>
                                 </li>
                             {% endif %}
                         {% endfor %}
-                        {#                        <li class="is-active"><a>9/Set</a></li>#}
-                        {#                        <li><a>10/Set</a></li>#}
-                        {#                        <li><a>11/Set</a></li>#}
-                        {#                        <li><a>12/Set</a></li>#}
                         <li>
-                            <a class="has-text-dark">
+                            <a class="has-text-dark" href="{% url 'eventos:novo-dia' slug=evento.slug %}">
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
-                                <!-- <span>Adicionar</span> -->
                             </a>
                     </ul>
                 </div>
-                <!-- <a class="is-active">Dia 1</a>
-                    <a>Dia 2</a>
-                    <a>Dia 3</a>
-                    <a>Dia 4</a>
-                    <a>Dia 5</a>
-                    <a class="has-text-dark">
-                        <span class="icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Adicionar</span>
-                    </a> -->
                 {% for a in atividades %}
                     <a href="{% url 'eventos:editar-atividade' slug=evento.slug dia=dia_atual apk=a.pk %}"
                        class="panel-block is-active">
@@ -78,17 +64,32 @@
                         </object>
                     </a>
                 {% endfor %}
-                <a href="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}"
-                   class="button is-dark is-outlined is-fullwidth" style="max-width: 400px; margin: 8px auto;">
-                    <span class="panel-icon">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                    </span>
-                    <span class="has-text-centered">Nova Atividade</span>
-                </a>
+                <div class="btns">
+                        <a class="button is-dark is-outlined" style="width: 300px;">
+                            <span class="panel-icon">
+                                <i class="fas fa-pen" aria-hidden="true"></i>
+                            </span>
+                            <span class="has-text-centered">Editar Dia</span>
+                        </a>
+                        <a href="{% url 'eventos:nova-atividade' slug=evento.slug dia=dia_atual %}"
+                           class="button is-dark is-outlined" style="width: 300px;">
+                            <span class="panel-icon">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </span>
+                            <span class="has-text-centered">Nova Atividade</span>
+                        </a>
+                </div>
             </article>
         </div>
     </section>
-
+    <style>
+        .btns {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+    </style>
     <script>
         function get_confirmation(message) {
             const res = confirm(message);

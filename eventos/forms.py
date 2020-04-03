@@ -23,6 +23,7 @@ class DiaForm(ModelForm):
     class Meta:
         model = Dia
         fields = '__all__'
+        exclude = ['evento']
 
 
 class AtividadeForm(ModelForm):

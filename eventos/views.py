@@ -8,7 +8,7 @@ from organizador.models import Organizador
 from administrador.models import Administrador
 from .models import Evento, Dia, Atividade, Palestrante, Patrocinador, Realizador, Apoiador
 
-from .forms import EventoForm, AtividadeForm, PalestranteForm, PatrocinadorForm, RealizadorForm, ApoiadorForm
+from .forms import EventoForm, AtividadeForm, PalestranteForm, PatrocinadorForm, RealizadorForm, ApoiadorForm, DiaForm
 
 
 class Index(View):
@@ -75,11 +75,77 @@ def dias_atividades(request, slug, dia):
     template_name = 'eventos/listagem-dias.html'
     e = Evento.objects.get(slug=slug)
     user = Organizador.objects.get(user=request.user)
-    dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+    try:
+        dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
+    except:
+        dia_atual = Dia.objects.create(dia=1, data="01/01", evento=e)
     dias = Dia.objects.filter(evento=e)
     atividades = Atividade.objects.filter(dia=dia_atual)
     context = {'user': user, 'evento': e, 'dia_atual': dia_atual, 'dias': dias, 'atividades': atividades}
     return render(request, template_name, context)
+
+
+class NovoDia(View):
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        template_name = 'eventos/novo-dia.html'
+        e = Evento.objects.get(slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_form = DiaForm()
+        context = {'user': user, 'evento': e,
+                   'dia_form': dia_form}
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/novo-dia.html'
+        e = get_object_or_404(Evento, slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_form = DiaForm(request.POST)
+        if not request.POST['dia']:
+            dia_form.add_error('dia', 'Este campo é obrigatório')
+        if not request.POST['data']:
+            dia_form.add_error('data', 'Este campo é obrigatório')
+        if dia_form.is_valid():
+            d = dia_form.save(commit=False)
+            d.evento = e
+            d.save()
+            return redirect(to='eventos:dias-atividades', slug=e.slug, dia=1, permanent=True)
+        context = {'user': user, 'evento': e,
+                   'dia_form': dia_form}
+        return render(request, template_name, context)
+
+
+class EditarDia(View):
+    @method_decorator(login_required)
+    def get(self, request, slug, pk):
+        template_name = 'eventos/novo-dia.html'
+        e = Evento.objects.get(slug=slug)
+        dia = Dia.objects.get(dia=pk)
+        user = Organizador.objects.get(user=request.user)
+        dia_form = DiaForm(instance=dia)
+        context = {'user': user, 'evento': e,
+                   'dia_form': dia_form}
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        template_name = 'eventos/novo-dia.html'
+        e = get_object_or_404(Evento, slug=slug)
+        user = Organizador.objects.get(user=request.user)
+        dia_form = DiaForm(request.POST)
+        if not request.POST['dia']:
+            dia_form.add_error('dia', 'Este campo é obrigatório')
+        if not request.POST['data']:
+            dia_form.add_error('data', 'Este campo é obrigatório')
+        if dia_form.is_valid():
+            d = dia_form.save(commit=False)
+            d.evento = e
+            d.save()
+            return redirect(to='eventos:dias-atividades', slug=e.slug, dia=1, permanent=True)
+        context = {'user': user, 'evento': e,
+                   'dia_form': dia_form}
+        return render(request, template_name, context)
 
 
 class NovaAtividade(View):
