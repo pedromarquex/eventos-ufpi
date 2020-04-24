@@ -6,6 +6,7 @@ from .views import palestrantes, NovoPalestrante, EditarPalestrante, exclui_pale
 from .views import patrocinadores, NovoPatrocinador, EditarPatrocinador, exclui_patrocinador
 from .views import realizadores, NovoRealizador, EditarRealizador, exclui_realizador
 from .views import apoiadores, NovoApoiador, EditarApoiador, exclui_apoiador
+from .views import evento
 
 app_name = 'eventos'
 
@@ -51,4 +52,7 @@ urlpatterns = [
     path('<slug:slug>/novo-apoiador', NovoApoiador.as_view(), name='novo-apoiador'),
     path('<slug:slug>/editar-apoiador/<int:pk>', EditarApoiador.as_view(), name='editar-apoiador'),
     path('<slug:slug>/apoiadores/<int:pk>/excluir', exclui_apoiador, name='excluir-apoiador'),
+
+    # evento
+    path('<slug:slug>/', evento, name='evento'),
 ]

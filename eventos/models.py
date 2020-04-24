@@ -80,12 +80,7 @@ class Palestrante(models.Model):
     # referência para uma Atividade
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
-    atividade = models.ForeignKey(
-        Atividade,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+    atividade = models.ForeignKey(Atividade, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nome

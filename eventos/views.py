@@ -315,13 +315,19 @@ class NovoPalestrante(View):
 class EditarPalestrante(View):
     @method_decorator(login_required)
     def get(self, request, slug, pk):
+        atividades = []
         template_name = 'eventos/editar-palestrante.html'
         user = Organizador.objects.get(user=request.user)
         e = Evento.objects.get(slug=slug)
         p = get_object_or_404(Palestrante, pk=pk)
+        for dia in e.dia_set.filter():
+            for a in Atividade.objects.filter(dia=dia):
+                atividades.append(a)
         p_form = PalestranteForm(instance=p)
         context = {
-            'user': user, 'evento': e,
+            'atividades': atividades,
+            'user': user,
+            'evento': e,
             'p_form': p_form,
             'pk': pk,
             'p': p
@@ -635,3 +641,12 @@ def exclui_apoiador(request, slug, pk):
         return redirect(to='eventos:apoiadores', slug=slug)
     except Exception:
         return redirect(to='eventos:apoiadores', slug=slug)
+
+
+def evento(request, slug):
+    e = get_object_or_404(Evento, slug=slug)
+    template_name = 'eventos/evento.html'
+    context = {
+        'evento': e
+    }
+    return render(request, template_name, context)
