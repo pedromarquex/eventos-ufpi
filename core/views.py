@@ -7,6 +7,10 @@ from organizador.models import Organizador
 from administrador.models import Administrador
 
 
+def index(request):
+    return redirect('eventos:index')
+
+
 class Login(View):
     def get(self, request):
         if request.user.is_anonymous:
@@ -30,6 +34,9 @@ class Login(View):
                 Administrador.objects.get(user=user)
                 return redirect('administrador:listar-organizadores')
             except:
+                org = Organizador.objects.get(user=user)
+                if not org.has_changed_password:
+                    return redirect('organizador:nova-senha')
                 return redirect('organizador:meus-eventos')
 
         else:

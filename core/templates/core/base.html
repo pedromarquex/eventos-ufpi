@@ -14,6 +14,9 @@
 
 <body>
 
+{% block nav %}
+
+
 <nav class="navbar is-dark is-bold" role="navigation" aria-label="main navigation">
     <div class="container" id="navbar-container">
         <div class="navbar-brand">
@@ -36,12 +39,16 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{% url 'organizador:meus-eventos' %}">
-                                Meus Eventos
-                            </a>
                             {% if is_admin %}
                                 <a class="navbar-item" href="{% url 'administrador:listar-organizadores' %}">
                                     Organizadores
+                                </a>
+                            {% else %}
+                                <a class="navbar-item" href="{% url 'organizador:perfil' %}">
+                                    Perfil
+                                </a>
+                                <a class="navbar-item" href="{% url 'organizador:meus-eventos' %}">
+                                    Meus Eventos
                                 </a>
                             {% endif %}
                             <hr class="navbar-divider">
@@ -55,6 +62,8 @@
         </div>
     </div>
 </nav>
+
+{% endblock %}
 {% block content %}
 {% endblock %}
 

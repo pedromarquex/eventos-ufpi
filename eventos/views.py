@@ -78,7 +78,7 @@ def dias_atividades(request, slug, dia):
     try:
         dia_atual = get_object_or_404(Dia, evento=e, dia=dia)
     except:
-        dia_atual = Dia.objects.create(dia=1, data="01/01", evento=e)
+        dia_atual = Dia.objects.create(dia=1, data="01/Jan", evento=e)
     dias = Dia.objects.filter(evento=e)
     atividades = Atividade.objects.filter(dia=dia_atual)
     context = {'user': user, 'evento': e, 'dia_atual': dia_atual, 'dias': dias, 'atividades': atividades}
@@ -98,10 +98,21 @@ class NovoDia(View):
 
     @method_decorator(login_required)
     def post(self, request, slug):
+        dia_existe = None
         template_name = 'eventos/novo-dia.html'
         e = get_object_or_404(Evento, slug=slug)
         user = Organizador.objects.get(user=request.user)
+
+        # verificando se o dia de evento já está ocupado
+        dia = int(request.POST['dia'])
+        try:
+            dia_existe = Dia.objects.get(dia=dia, evento=e)
+        except:
+            pass
+
         dia_form = DiaForm(request.POST)
+        if dia_existe:
+            dia_form.add_error('dia', 'Este dia de evento já está cadastrado')
         if not request.POST['dia']:
             dia_form.add_error('dia', 'Este campo é obrigatório')
         if not request.POST['data']:

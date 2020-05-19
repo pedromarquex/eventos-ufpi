@@ -54,5 +54,5 @@ urlpatterns = [
     path('<slug:slug>/apoiadores/<int:pk>/excluir', exclui_apoiador, name='excluir-apoiador'),
 
     # evento
-    path('<slug:slug>/', evento, name='evento'),
+    path('evento/<slug:slug>/', evento, name='evento'),
 ]
