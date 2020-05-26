@@ -363,9 +363,12 @@ class EditarPalestrante(View):
                 'pk': pk,
                 'p': p
             }
-            return render(request, template_name, context, success_message)
-        context = {'user': user, 'evento': e,
-                   'p_form': p_form}
+            return render(request, template_name, context)
+        context = {
+            'user': user,
+            'evento': e,
+            'p_form': p_form
+        }
         return render(request, template_name, context)
 
 
@@ -426,7 +429,7 @@ class EditarPatrocinador(View):
                 'pk': pk,
                 'p': p
             }
-            return render(request, template_name, context, success_message)
+            return render(request, template_name, context)
         context = {'user': user, 'evento': e,
                    'p_form': p_form}
         return render(request, template_name, context)
@@ -517,7 +520,7 @@ class EditarRealizador(View):
                 'pk': pk,
                 'r': r
             }
-            return render(request, template_name, context, success_message)
+            return render(request, template_name, context)
         context = {'user': user, 'evento': e,
                    'p_form': r_form}
         return render(request, template_name, context)
@@ -608,7 +611,7 @@ class EditarApoiador(View):
                 'pk': pk,
                 'a': a
             }
-            return render(request, template_name, context, success_message)
+            return render(request, template_name, context)
         context = {'user': user, 'evento': e,
                    'p_form': a_form}
         return render(request, template_name, context)
@@ -657,7 +660,9 @@ def exclui_apoiador(request, slug, pk):
 def evento(request, slug):
     e = get_object_or_404(Evento, slug=slug)
     template_name = 'eventos/evento.html'
+    p = e.palestrante_set.all()
     context = {
-        'evento': e
+        'evento': e,
+        'palestrantes': p
     }
     return render(request, template_name, context)
