@@ -1,15 +1,21 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.contrib.auth.forms import UserCreationForm
 
 from administrador.models import Administrador
 from organizador.forms import OrganizadorForm
 from organizador.models import Organizador
 
+from .forms import CustomUsernameForm
+
 
 class NovoOrganizador(View):
+    @method_decorator(login_required)
     def get(self, request):
         template_name = 'administrador/novo_organizador.html'
+        is_admin = None
         organizador_form = OrganizadorForm()
         user_form = UserCreationForm()
         if request.user.is_anonymous:
@@ -17,25 +23,43 @@ class NovoOrganizador(View):
         else:
             try:
                 user = Administrador.objects.get(user=request.user)
+                is_admin = True
             except:
-                user = Organizador.objects.get(user=request.user)
-        context = {'user': user, 'organizador_form': organizador_form, 'user_form': user_form}
+                return redirect(to='core:sistema')
+        context = {
+            'user': user,
+            'organizador_form': organizador_form,
+            'user_form': user_form,
+            'is_admin': is_admin
+        }
         return render(request, template_name, context)
 
+    @method_decorator(login_required)
     def post(self, request):
-        organizador_form = OrganizadorForm(request.POST, request.FILES)
+        organizador_form = OrganizadorForm(request.POST)
         user_form = UserCreationForm(request.POST)
-        if user_form.is_valid():
-            user = user_form.save()
-            if organizador_form.is_valid():
-                org = organizador_form.save(commit=False)
-                org.user = user
-                org.save()
-                return redirect('administrador:listar-organizadores')
+        if organizador_form.is_valid() and user_form.is_valid():
+            u = user_form.save()
+            org = organizador_form.save(commit=False)
+            org.user = u
+            org.save()
+            return redirect('administrador:listar-organizadores')
+        user = Administrador.objects.get(user=request.user)
+        template_name = 'administrador/novo_organizador.html'
+        is_admin = True
+        context = {
+            'user': user,
+            'organizador_form': organizador_form,
+            'user_form': user_form,
+            'is_admin': is_admin
+        }
+        return render(request, template_name, context)
 
 
 class ListarOrganizador(View):
+    @method_decorator(login_required)
     def get(self, request):
+        is_admin = None
         template_name = 'administrador/listar_organizadores.html'
         if request.user.is_anonymous:
             user = request.user
@@ -50,17 +74,56 @@ class ListarOrganizador(View):
         return render(request, template_name, context)
 
 
+@login_required
+def excluir_organizador(request, pk):
+    get_object_or_404(Administrador, user=request.user)
+    organizador = Organizador.objects.get(pk=pk)
+    organizador.user.delete()
+    organizador.delete()
+    return redirect('administrador:listar-organizadores')
+
+
 class EditarOrganizador(View):
-    def get(self, request):
+    @method_decorator(login_required)
+    def get(self, request, pk):
         template_name = 'administrador/editar_organizador.html'
-        organizador_form = OrganizadorForm()
-        user_form = UserCreationForm()
-        if request.user.is_anonymous:
-            user = request.user
-        else:
-            try:
-                user = Administrador.objects.get(user=request.user)
-            except:
-                user = Organizador.objects.get(user=request.user)
-        context = {'user': user, 'organizador_form': organizador_form, 'user_form': user_form}
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        org = get_object_or_404(Organizador, pk=pk)
+        organizador_form = OrganizadorForm(instance=org)
+        username_form = CustomUsernameForm(instance=org.user)
+        context = {
+            'user': user,
+            'organizador_form': organizador_form,
+            'username_form': username_form,
+            'is_admin': is_admin
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, pk):
+        template_name = 'administrador/editar_organizador.html'
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        org = get_object_or_404(Organizador, pk=pk)
+        organizador_form = OrganizadorForm(request.POST, instance=org)
+        username_form = CustomUsernameForm(request.POST, instance=org.user)
+        if organizador_form.is_valid() and username_form.is_valid():
+            organizador_form.save()
+            username_form.save()
+            success_message = 'Alterações salvas com sucesso!'
+            context = {
+                'user': user,
+                'organizador_form': organizador_form,
+                'username_form': username_form,
+                'is_admin': is_admin,
+                'success_message': success_message
+            }
+            return render(request, template_name, context)
+        context = {
+            'user': user,
+            'organizador_form': organizador_form,
+            'username_form': username_form,
+            'is_admin': is_admin,
+        }
         return render(request, template_name, context)

@@ -1,13 +1,23 @@
 {% extends 'core/base.html' %}
+
 {% load widget_tweaks %}
-{% block title %}Novo Organizador | Eventos UFPI{% endblock %}
 
 {% block content %}
-    <section class="section hero is-light">
-        <div class="container hero-head" id="main-container">
-            <div class="box">
-                <h1 class="title is-2 has-text-centered">Novo Organizador</h1>
-                <form action="{% url 'administrador:novo-organizador' %}" method="POST" enctype="multipart/form-data">
+    <section class="section has-background-grey-lighter" style="min-height: 90vh;">
+        <div class="container box" style="max-width: 950px; min-height: 80vh;">
+            <h1 class="title has-text-centered has-icons-right is-2">
+                <span>Novo Organizador</span>
+            </h1>
+            <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
+                <p class="panel-heading">
+                    <a class="link has-text-light"
+                       href="{% url 'administrador:listar-organizadores' %}">
+                        <span class="icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                    </a>
+                </p>
+                <form method="POST" style="margin: 20px 10px;">
                     {% csrf_token %}
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -16,134 +26,160 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field organizador_form.first_name class="input" placeholder="Primeiro Nome" %}
-                                    {#                                    <input class="input" type="text" placeholder="Primeiro Nome">#}
+                                    {% render_field organizador_form.first_name class="input" placeholder="Agnaldo" %}
                                     <span class="icon is-small is-left">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                                </p>
-                            </div>
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field organizador_form.last_name class="input" placeholder="Segundo Nome" %}
-                                    {#                                    <input class="input" type="email" placeholder="Segundo Nome">#}
-                                    <span class="icon is-small is-left">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field is-horizontal">
-                        <div class="field-label">
-                            <label class="label">Email e Usuário</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field is-expanded">
-                                <div class="field">
-                                    <p class="control is-expanded has-icons-left">
-                                        {% render_field organizador_form.email class="input" placeholder="Digite seu melhor Email" %}
-                                        {#                                        <input class="input" type="email" placeholder="Digite seu melhor email">#}
-                                        <span class="icon is-small is-left">
-                                        <i class="fas fa-envelope"></i>
+                                        <i class="fas fa-user"></i>
                                     </span>
-                                    </p>
-                                </div>
-                                {#                                <p class="help">Este email já está sendo usado</p>#}
+
+                                </p>
                             </div>
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field user_form.username class="input" placeholder="Nome de Usuário" %}
-{#                                    <input id="username" class="input" type="text" placeholder="Nome de usuário">#}
+                                    {% render_field organizador_form.last_name class="input" placeholder="Timóteo" %}
                                     <span class="icon is-small is-left">
-                                    <i class="fas fa-user"></i>
-                                </span>
+                                        <i class="fas fa-user"></i>
+                                    </span>
                                 </p>
                             </div>
                         </div>
                     </div>
-
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
-                            <label class="label">Foto de Perfil</label>
+                            <label class="label">
+                                Email
+                            </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <p class="control has-icons-left">
-                                <div id="file-js-example" class="file has-name is-fullwidth">
-                                    <label class="file-label">
-                                        {% render_field organizador_form.foto class="file-input" name="resume" %}
-{#                                        <input class="file-input" type="file" name="resume">#}
-                                        <span class="file-cta">
-                                            <span class="file-icon">
-                                                <i class="fas fa-upload"></i>
-                                            </span>
-                                            <span class="file-label">Choose a file…</span>
+                                {% if organizador_form.email.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field organizador_form.email class="input is-danger" placeholder="email@example.com" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
                                         </span>
-                                        <span class="file-name">No file uploaded</span>
-                                    </label>
-                                </div>
-                                </p>
+                                    </p>
+                                    {% for error in organizador_form.email.errors %}
+                                        <p class="help">{{ error }}</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field organizador_form.email class="input" placeholder="email@example.com" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
-                            <label class="label">Senha</label>
+                            <label class="label">
+                                Usuário
+                            </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field user_form.password1 class="input" placeholder="Sua senha secreta" %}
-{#                                    <input id="password" class="input" type="password" placeholder="Sua senha secreta">#}
-                                    <span class="icon is-small is-left">
-                                    <i class="fas fa-key"></i>
-                                </span>
-                                </p>
-                            </div>
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    {% render_field user_form.password2 class="input" placeholder="Confirme sua senha" %}
-{#                                    <input id="password" class="input" type="password" placeholder="Sua senha secreta">#}
-                                    <span class="icon is-small is-left">
-                                    <i class="fas fa-key"></i>
-                                </span>
-                                </p>
+                                {% if user_form.username.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.username class="input is-danger" placeholder="username" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                    {% for error in user_form.username.errors %}
+                                        <p class="help">{{ error }}</p>
+                                    {% endfor %}
+
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.username class="input" placeholder="username" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">
+                                Senha
+                            </label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                {% if user_form.password1.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.password1 class="input is-danger" placeholder="**********" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                    {% for error in user_form.password1.errors %}
+                                        <p class="help">{{ error }}</p>
+                                    {% endfor %}
 
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.password1 class="input" placeholder="********" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">
+                                Confirmação
+                            </label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                {% if user_form.password2.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.password2 class="input is-danger" placeholder="********" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+                                    </p>
+                                    {% for error in user_form.password2.errors %}
+                                        <p class="help">{{ error }}</p>
+                                    {% endfor %}
 
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field user_form.password2 class="input" placeholder="********" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                     <div class="field is-horizontal">
                         <div class="field-label">
                             <!-- Left empty for spacing -->
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <div class="control has-icon-left is-pulled-right">
-                                    <button class="button is-dark">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span>Cadastrar</span>
+                                <div class="control has-icon">
+                                    <button class="button is-dark is-outlined is-fullwidth"
+                                            style="max-width: 400px; margin: 0 auto 16px;">
+                                        <span>Confirmar</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
+            </article>
         </div>
     </section>
-    <script>
-        const fileInput = document.querySelector('#file-js-example input[type=file]');
-        fileInput.onchange = () => {
-            if (fileInput.files.length > 0) {
-                const fileName = document.querySelector('#file-js-example .file-name');
-                fileName.textContent = fileInput.files[0].name;
-            }
-        }
-    </script>
+
 {% endblock %}
