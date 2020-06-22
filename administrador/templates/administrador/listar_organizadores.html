@@ -8,18 +8,18 @@
                 <form method="get">
                     <div class="field is-grouped">
                         <p class="control is-expanded">
-                            <input class="input" type="text" placeholder="Nome do Organizador">
+                            <input class="input" name="nome" type="text" placeholder="Nome do Organizador">
                         </p>
                         <p class="control is-expanded">
-                            <input class="input" type="text" placeholder="Usuário">
+                            <input class="input" name="usuario" type="text" placeholder="Usuário">
                         </p>
                         <p class="control">
-                            <a class="button is-dark has-icons-left">
+                            <button class="button is-dark has-icons-left">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-search"></i>
                             </span>
                                 <span>Procurar</span>
-                            </a>
+                            </button>
                         </p>
                         <p class="control">
                             <a href="{% url 'administrador:novo-organizador' %}" class="button is-info has-icons-left">
@@ -73,35 +73,27 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
-                    <a class="pagination-previous has-icon-left">
-                <span class="icon">
-                    <i class="fas fa-arrow-left"></i>
-                </span>
-                        <span>Anterior</span>
-                    </a>
-                    </a>
-                    <a class="pagination-next has-icon-right">
-                        <span>Próxima</span>
-                        <span class="icon">
-                            <i class="fas fa-arrow-right"></i>
-                        </span></a>
-                    <ul class="pagination-list">
-                        <li><a class="pagination-link" aria-label="Goto page 45">1</a></li>
-                        <li><span class="pagination-ellipsis">&hellip;</span></li>
-                        {#                    <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>#}
-                        <li>
-                            <a class="pagination-link has-background-grey-dark" aria-label="Page 46"
-                               aria-current="page">
-                                <span style="color: white">46</span>
-                            </a>
-                        </li>
-                        {#                    <li><a class="pagination-link" aria-label="Goto page 45">47</a></li>#}
-                        <li><span class="pagination-ellipsis">&hellip;</span></li>
-                        <li><a class="pagination-link has-icon-right" aria-label="Goto page 45">96</a>
-                        </li>
-                    </ul>
-                </nav>
+{#                <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">#}
+{#                    <ul class="pagination-list">#}
+{#                        <li>#}
+{#                            <a class="pagination-link" aria-label="Previous page">#}
+{#                                <span class="icon has-text-dark">#}
+{#                                    <i class="fas fa-arrow-left"></i>#}
+{#                                </span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a class="pagination-link" aria-label="Page Number">7</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a class="pagination-link" aria-label="Previous page">#}
+{#                                <span class="icon has-text-dark">#}
+{#                                    <i class="fas fa-arrow-right"></i>#}
+{#                                </span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </nav>#}
             </div>
         </div>
     </section>

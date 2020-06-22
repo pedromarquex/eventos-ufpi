@@ -61,6 +61,22 @@ class ListarOrganizador(View):
     def get(self, request):
         is_admin = None
         template_name = 'administrador/listar_organizadores.html'
+
+        organizadores = None
+
+        full_name = ''
+        username = ''
+
+        try:
+            full_name = request.GET['nome']
+        except:
+            pass
+
+        try:
+            username = request.GET['usuario']
+        except:
+            pass
+
         if request.user.is_anonymous:
             user = request.user
         else:
@@ -69,7 +85,15 @@ class ListarOrganizador(View):
                 is_admin = True
             except:
                 user = Organizador.objects.get(user=request.user)
-        organizadores = Organizador.objects.filter(is_active=True)
+
+        if len(full_name) > 0 and len(username) > 0:
+            organizadores = Organizador.objects.filter(full_name__icontains=full_name, user__username__iexact=username)
+        elif len(full_name) > 0:
+            organizadores = Organizador.objects.filter(full_name__icontains=full_name)
+        elif len(username) > 0:
+            organizadores = Organizador.objects.filter(user__username__icontains=username)
+        else:
+            organizadores = Organizador.objects.all()
         context = {'user': user, 'organizadores': organizadores, 'is_admin': is_admin}
         return render(request, template_name, context)
 
