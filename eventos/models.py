@@ -87,9 +87,9 @@ class Palestrante(models.Model):
 
 
 class Patrocinador(models.Model):
-    foto = models.ImageField(upload_to="patrocinadores/banner", null=True, blank=True)
+    foto = models.ImageField(upload_to="patrocinadores/banner")
     nome = models.CharField(max_length=150)
-    link = models.CharField(max_length=150, null=True, blank=True)
+    link = models.CharField(max_length=150)
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -97,9 +97,9 @@ class Patrocinador(models.Model):
 
 
 class Realizador(models.Model):
-    foto = models.ImageField(upload_to="realizadores/banner", null=True, blank=True)
+    foto = models.ImageField(upload_to="realizadores/banner")
     nome = models.CharField(max_length=150)
-    link = models.CharField(max_length=150, null=True, blank=True)
+    link = models.CharField(max_length=150)
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -107,9 +107,9 @@ class Realizador(models.Model):
 
 
 class Apoiador(models.Model):
-    foto = models.ImageField(upload_to="apoiadores/banner", null=True, blank=True)
+    foto = models.ImageField(upload_to="apoiadores/banner")
     nome = models.CharField(max_length=150)
-    link = models.CharField(max_length=150, null=True, blank=True)
+    link = models.CharField(max_length=150)
     evento = models.ForeignKey(Evento, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

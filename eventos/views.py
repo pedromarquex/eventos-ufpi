@@ -132,7 +132,7 @@ class EditarDia(View):
     def get(self, request, slug, pk):
         template_name = 'eventos/editar-dia.html'
         e = Evento.objects.get(slug=slug)
-        dia = Dia.objects.get(dia=pk)
+        dia = Dia.objects.get(pk=pk)
         user = Organizador.objects.get(user=request.user)
         dia_form = DiaForm(instance=dia)
         context = {
@@ -653,16 +653,30 @@ def exclui_apoiador(request, slug, pk):
         a = Apoiador.objects.get(pk=pk)
         a.delete()
         return redirect(to='eventos:apoiadores', slug=slug)
-    except Exception:
+    except Apoiador.DoesNotExist:
         return redirect(to='eventos:apoiadores', slug=slug)
 
 
 def evento(request, slug):
+    a = []
     e = get_object_or_404(Evento, slug=slug)
     template_name = 'eventos/evento.html'
     p = e.palestrante_set.all()
+    pa = e.patrocinador_set.all()
+    r = e.realizador_set.all()
+    ap = e.apoiador_set.all()
+    d = e.dia_set.all().order_by('dia')
+
+    for dia in d:
+        a.append([at for at in Atividade.objects.filter(dia=dia)])
+
     context = {
         'evento': e,
-        'palestrantes': p
+        'palestrantes': p,
+        'dias': d,
+        'atividades': a,
+        'patrocinadores': pa,
+        'realizadores': r,
+        'apoiadores': ap,
     }
     return render(request, template_name, context)

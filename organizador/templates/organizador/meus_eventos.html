@@ -102,7 +102,7 @@
                         <div class="column is-one-third">
                             <div class="card">
                                 <div class="card-image">
-                                    <a href="#">
+                                    <a href="{% url 'eventos:evento' slug=evento.slug %}">
                                         <figure class="image">
                                             {% if evento.banner %}
                                                 <img src="{{ evento.banner.url }}" alt="banner do evento">
@@ -116,7 +116,7 @@
                                 <div class="card-content">
                                     <div class="media">
                                         <div class="media-content has-text-centered">
-                                            <a href="#">
+                                            <a href="{% url 'eventos:evento' slug=evento.slug %}">
                                                 <p class="title is-4">{{ evento.nome }}</p>
                                             </a>
                                             {% if evento.instagram %}

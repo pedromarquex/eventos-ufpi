@@ -22,11 +22,17 @@
             <article class="panel is-dark" style="max-width: 720px; margin: 0 auto; padding-bottom: 8px;">
                 <p class="panel-heading is-size-4"></p>
                 {% for p in palestrantes %}
-                    <a class="panel-block is-active"
-                       href="{% url 'eventos:editar-palestrante' slug=evento.slug pk=p.pk %}">
+                    <a
+                        class="panel-block is-active"
+                        href="{% url 'eventos:editar-palestrante' slug=evento.slug pk=p.pk %}"
+                    >
 
                         <figure class="image is-64x64" style="margin-right: 20px;">
-                            <img class="is-rounded" src="{{ p.foto.url }}">
+                            <img
+                                class="is-rounded"
+                                src="{{ p.foto.url }}"
+                                style="height: 64px; width: 64px; object-fit: cover;"
+                            >
                         </figure>
                         <span>{{ p.nome }}</span>
                         <object style="margin-left: auto;">
