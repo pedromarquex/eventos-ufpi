@@ -6,7 +6,7 @@ from .views import palestrantes, NovoPalestrante, EditarPalestrante, exclui_pale
 from .views import patrocinadores, NovoPatrocinador, EditarPatrocinador, exclui_patrocinador
 from .views import realizadores, NovoRealizador, EditarRealizador, exclui_realizador
 from .views import apoiadores, NovoApoiador, EditarApoiador, exclui_apoiador
-from .views import evento
+from .views import evento, palestrante_detalhe
 
 app_name = 'eventos'
 
@@ -55,4 +55,7 @@ urlpatterns = [
 
     # evento
     path('evento/<slug:slug>/', evento, name='evento'),
+
+    # detalhes do palestrante
+    path('evento/<slug:slug>/palestrante/<int:pk>/', palestrante_detalhe, name='palestrante-detalhe'),
 ]

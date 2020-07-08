@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <section class="section has-background-grey-lighter" style="min-height: 90vh;">
+        {% if success_message %}
+            <div class="notification is-success" style="max-width: 950px; margin: 0 auto 10px">
+                <button class="delete"></button>
+                <strong>{{ success_message }}</strong>
+            </div>
+        {% endif %}
+        <div class="container box" style="max-width: 950px; min-height: 80vh;">
+            <h1 class="title has-text-centered has-icons-right is-2">
+                <span>Novo Evento</span>
+            </h1>
+            <article class="panel is-dark" style="max-width: 720px; margin: 0 auto;">
+                <p class="panel-heading">
+                    <a class="link has-text-light"
+                       href="{% url 'administrador:listar-eventos' %}">
+                        <span class="icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                    </a>
+                </p>
+                <form method="POST" style="margin: 20px 10px;">
+                    {% csrf_token %}
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Nome</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                {% if evento_form.nome.errors %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field evento_form.nome class="input is-danger" placeholder="Melhor evento" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                    {% for error in evento_form.nome.errors %}
+                                        <p class="help is-danger">{{ error }}</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="control is-expanded has-icons-left">
+                                        {% render_field evento_form.nome class="input" placeholder="Melhor evento" %}
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">
+                                Organizador
+                            </label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                {% render_field evento_form.organizador class="input" %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <!-- Left empty for spacing -->
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control has-icon">
+                                    <button class="button is-dark is-outlined is-fullwidth"
+                                            style="max-width: 400px; margin: 0 auto 16px;">
+                                        <span>Confirmar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

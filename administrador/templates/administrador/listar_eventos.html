@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+{% block title %}Eventos | Eventos UFPI{% endblock %}
+{% block content %}
+    <section class="section has-background-light" style="min-height: 80vh;">
+        <div class="box container is-desktop">
+            <h1 class="title has-text-centered is-1">Eventos</h1>
+            <div class="container" id="main-container">
+                <form method="get">
+                    <div class="field is-grouped">
+                        <p class="control is-expanded">
+                            <input class="input" name="nome" type="text" placeholder="Nome do Evento">
+                        </p>
+                        <p class="control is-expanded">
+                            <input class="input" name="local" type="text" placeholder="Local do Evento">
+                        </p>
+                        <p class="control">
+                            <button class="button is-dark has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-search"></i>
+                            </span>
+                                <span>Procurar</span>
+                            </button>
+                        </p>
+                        <p class="control">
+                            <a href="{% url 'administrador:novo-evento' %}" class="button is-info has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                                <span>Novo Evento</span>
+                            </a>
+                        </p>
+                    </div>
+                </form>
+                <table class="table is-striped is-fullwidth is-hoverable" style="margin-top: 15px;">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Local</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for evento in eventos %}
+                        <tr>
+                            <td>
+                                <span>{{ evento }}</span>
+                            </td>
+                            <td>
+                                {% if evento.quando %}
+                                    <span>{{ evento.quando }}</span>
+                                {% else %}
+                                    <span>a definir</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if evento.onde %}
+                                    <span>{{ evento.onde }}</span>
+                                {% else %}
+                                    <span>a definir</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'administrador:editar-evento' pk=evento.pk %}" class="link"
+                                   title="Editar">
+                                <span class="icon is-small is-left has-text-dark">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'administrador:excluir-evento' pk=evento.pk %}" class="link"
+                                   title="Excluir"
+                                   onclick="return get_confirmation('Deseja realmente excluir {{ evento.nome }} ?')">
+                                <span class="icon is-small is-left has-text-danger">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                </a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {#                <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">#}
+                {#                    <ul class="pagination-list">#}
+                {#                        <li>#}
+                {#                            <a class="pagination-link" aria-label="Previous page">#}
+                {#                                <span class="icon has-text-dark">#}
+                {#                                    <i class="fas fa-arrow-left"></i>#}
+                {#                                </span>#}
+                {#                            </a>#}
+                {#                        </li>#}
+                {#                        <li>#}
+                {#                            <a class="pagination-link" aria-label="Page Number">7</a>#}
+                {#                        </li>#}
+                {#                        <li>#}
+                {#                            <a class="pagination-link" aria-label="Previous page">#}
+                {#                                <span class="icon has-text-dark">#}
+                {#                                    <i class="fas fa-arrow-right"></i>#}
+                {#                                </span>#}
+                {#                            </a>#}
+                {#                        </li>#}
+                {#                    </ul>#}
+                {#                </nav>#}
+            </div>
+        </div>
+    </section>
+    <script>
+        function get_confirmation(message) {
+            const res = confirm(message);
+            return res;
+        }
+    </script>
+{% endblock %}

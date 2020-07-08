@@ -680,3 +680,10 @@ def evento(request, slug):
         'apoiadores': ap,
     }
     return render(request, template_name, context)
+
+
+def palestrante_detalhe(request, slug, pk):
+    p = get_object_or_404(Palestrante, pk=pk)
+    template_name = 'eventos/palestrante-detalhe.html'
+    context = {'palestrante': p, 'slug': slug}
+    return render(request, template_name, context)

@@ -1,426 +1,370 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'eventos/evento-base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <title>{{ evento.nome }}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+{% block title %}{{ evento.nome|upper }}{% endblock %}
 
-    <!-- Favicons -->
-    <link href="{% static 'img/favicon.png' %}" rel="icon">
-    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
-          rel="stylesheet">
-
-    <!-- Bootstrap CSS File -->
-    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Libraries CSS Files -->
-    <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/venobox/venobox.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-
-    <!-- Main Stylesheet File -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-    <!-- =======================================================
-      Theme Name: TheEvent
-      Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
-      Author: BootstrapMade.com
-      License: https://bootstrapmade.com/license/
-    ======================================================= -->
-</head>
-
-<body>
-
-<!--==========================
-  Header
-============================-->
-<header id="header">
-    <div class="container">
-
-        <div id="logo" class="pull-left">
-            <!-- Uncomment below if you prefer to use a text logo -->
-            <h1><a href="#main">Eventos|<span>UFPI</span></a></h1>
-            <!-- <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a> -->
-        </div>
-
-        <nav id="nav-menu-container">
-            <ul class="nav-menu">
-                <li class="menu-active"><a href="#intro">Home</a></li>
-                <li><a href="#about">Sobre</a></li>
-                <li><a href="#speakers">Palestrantes</a></li>
-                <li><a href="#schedule">Cronograma</a></li>
-                <li><a href="#venue">Localização</a></li>
-                <!-- <li><a href="#hotels">Hotels</a></li> -->
-                <!-- <li><a href="#gallery">Gallery</a></li> -->
-                <li><a href="#supporters">Patrocinadores</a></li>
-                <li><a href="#contact">Contato</a></li>
-                <!--           <li class="buy-tickets"><a href="#buy-tickets">Buy Tickets</a></li> -->
-            </ul>
-        </nav><!-- #nav-menu-container -->
-    </div>
-</header><!-- #header -->
-
-<!--==========================
-  Intro Section
-============================-->
-<section id="intro">
-    <div class="intro-container wow fadeIn">
-        <h1 class="mb-4 pb-0">{{ evento.nome }}</h1>
-        <!-- <h1 class="mb-4 pb-0">The Annual<br><span>Marketing</span> Conference</h1> -->
-        <p class="mb-4 pb-0">{{ evento.quando }}, {{ evento.onde }}</p>
-        <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
-           data-autoplay="true"></a>
-        <a href="#about" class="about-btn scrollto">Sobre o Evento</a>
-    </div>
-</section>
-
-<main id="main">
-
+{% block header %}
     <!--==========================
-      About Section
-    ============================-->
-    <section id="about">
+Header
+============================-->
+    <header id="header">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2>Sobre o evento</h2>
-                    <p>{{ evento.sobre|linebreaks }}</p>
-                </div>
-                <div class="col-lg-3">
-                    <h3>Onde</h3>
-                    <p>{{ evento.onde }}</p>
-                </div>
-                <div class="col-lg-3">
-                    <h3>Quando</h3>
-                    <p>{{ evento.quando }}</p>
-                </div>
+
+            <div id="logo" class="pull-left">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <h1><a href="{% url 'eventos:index' %}">Eventos|<span>UFPI</span></a></h1>
+                <!-- <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a> -->
             </div>
+
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li class="menu-active"><a href="#intro">Home</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#speakers">Palestrantes</a></li>
+                    <li><a href="#schedule">Cronograma</a></li>
+                    <li><a href="#venue">Localização</a></li>
+                    <!-- <li><a href="#hotels">Hotels</a></li> -->
+                    <!-- <li><a href="#gallery">Gallery</a></li> -->
+                    <li><a href="#supporters">Patrocinadores</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                    <!--           <li class="buy-tickets"><a href="#buy-tickets">Buy Tickets</a></li> -->
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </header>
+    <!-- #header -->
+{% endblock %}
+
+{% block content %}
+    <section id="intro">
+        <div class="intro-container wow fadeIn">
+            <h1 class="mb-4 pb-0">{{ evento.nome }}</h1>
+            <!-- <h1 class="mb-4 pb-0">The Annual<br><span>Marketing</span> Conference</h1> -->
+            <p class="mb-4 pb-0">{{ evento.quando }}, {{ evento.onde }}</p>
+            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
+               data-autoplay="true"></a>
+            <a href="#about" class="about-btn scrollto">Sobre o Evento</a>
         </div>
     </section>
 
-    <!--==========================
-      Speakers Section
-    ============================-->
-    <section id="speakers" class="wow fadeInUp">
-        <div class="container">
-            <div class="section-header">
-                <h2>Palestrantes</h2>
-                <p>Confira alguns palestrantes do nosso evento</p>
-            </div>
+    <main id="main">
 
-            <div class="row">
-                {% for p in palestrantes %}
-                    <div class="col-lg-4 col-md-6">
-                        <div class="speaker">
-                            <img
-                                    src="{{ p.foto.url }}"
-                                    alt="Speaker"
-                                    class="img-fluid"
-                                    style="width: 100%;min-height: 300px; max-height: 250px; object-fit: cover"
-                            >
-                            <div class="details">
-                                <h3><a href="speaker-details.html">{{ p.nome }}</a></h3>
-                                <p>{{ p.resumo }}</p>
-                                <div class="social">
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-google-plus"></i></a>
-                                    <a href=""><i class="fa fa-linkedin"></i></a>
+        <!--==========================
+          About Section
+        ============================-->
+        <section id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2>Sobre o evento</h2>
+                        <p>{{ evento.sobre|linebreaks }}</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Onde</h3>
+                        <p>{{ evento.onde }}</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>Quando</h3>
+                        <p>{{ evento.quando }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--==========================
+          Speakers Section
+        ============================-->
+        <section id="speakers" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Palestrantes</h2>
+                    <p>Confira alguns palestrantes do nosso evento</p>
+                </div>
+
+                <div class="row">
+                    {% for p in palestrantes %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="speaker">
+                                <img
+                                        src="{{ p.foto.url }}"
+                                        alt="Speaker"
+                                        class="img-fluid"
+                                        style="width: 100%;min-height: 300px; max-height: 250px; object-fit: cover"
+                                >
+                                <div class="details">
+                                    <h3>
+                                        <a href="{% url 'eventos:palestrante-detalhe' slug=evento.slug pk=p.pk %}">{{ p.nome }}</a>
+                                    </h3>
+                                    <p>{{ p.resumo }}</p>
+                                    <div class="social">
+                                        {% if p.twitter %}
+                                            <a href="{{ p.twitter }}"><i class="fa fa-twitter"></i></a>
+                                        {% endif %}
+                                        {% if p.instagram %}
+                                            <a href="{{ p.instagram }}"><i class="fa fa-instagram"></i></a>
+                                        {% endif %}
+                                        {% if p.linkedin %}
+                                            <a href="{{ p.linkedin }}"><i class="fa fa-linkedin"></i></a>
+                                        {% endif %}
+                                        {% if p.email %}
+                                            <a href="mailto:{{ p.email }}"><i class="fa fa-envelope"></i></a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section>
+
+        <!--==========================
+          Schedule Section
+        ============================-->
+        <section id="schedule" class="section-with-bg">
+            <div class="container wow fadeInUp">
+                <div class="section-header">
+                    <h2>Cronograma</h2>
+                    <p>Aqui está o que preparamos para o evento</p>
+                </div>
+
+                <ul class="nav nav-tabs" role="tablist">
+                    {% for dia in dias %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if forloop.first %}active{% endif %}"
+                               href="#day-{{ dia.dia }}"
+                               role="tab"
+                               data-toggle="tab"
+                            >{{ dia.data }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- <h3 class="sub-heading">Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia. Eius
+                  necessitatibus voluptatem quis labore perspiciatis quia.</h3> -->
+
+                <div class="tab-content row justify-content-center">
+
+                    <!-- Schdule List -->
+
+                    {% for a_list in atividades %}
+                        <div
+                                role="tabpanel"
+                                class="col-lg-9 tab-pane fade show {% if forloop.first %}active {% endif %}"
+                                id="day-{{ forloop.counter }}"
+                                style="min-height: 50vh;"
+                        >
+                            {% for a_item in a_list %}
+                                <div class="row schedule-item">
+                                    <div class="col-md-2">
+                                        <time>{{ a_item.horario }}</time>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h4>{{ a_item.nome }}</h4>
+                                        <p>{{ a_item.resumo }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    {% endfor %}
+                    <!-- End Schdule List -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!--==========================
+          Venue Section
+        ============================-->
+        <section id="venue" class="wow fadeInUp">
+
+            <div class="container-fluid">
+
+                <div class="section-header">
+                    <h2>Localização</h2>
+                    <p>Este foi o local escolhido para a OIAQ 2020</p>
+                </div>
+
+                <div class="row no-gutters">
+                    <div class="col-lg-6 venue-map">
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                                frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
-                {% endfor %}
-            </div>
-        </div>
 
-    </section>
-
-    <!--==========================
-      Schedule Section
-    ============================-->
-    <section id="schedule" class="section-with-bg">
-        <div class="container wow fadeInUp">
-            <div class="section-header">
-                <h2>Cronograma</h2>
-                <p>Aqui está o que preparamos para o evento</p>
-            </div>
-
-            <ul class="nav nav-tabs" role="tablist">
-                {% for dia in dias %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}"
-                           href="#day-{{ dia.dia }}"
-                           role="tab"
-                           data-toggle="tab"
-                        >{{ dia.data }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <!-- <h3 class="sub-heading">Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia. Eius
-              necessitatibus voluptatem quis labore perspiciatis quia.</h3> -->
-
-            <div class="tab-content row justify-content-center">
-
-                <!-- Schdule List -->
-
-                {% for a_list in atividades %}
-                    <div
-                            role="tabpanel"
-                            class="col-lg-9 tab-pane fade show {% if forloop.first %}active {% endif %}"
-                            id="day-{{ forloop.counter }}"
-                            style="min-height: 50vh;"
-                    >
-                        {% for a_item in a_list %}
-                            <div class="row schedule-item">
-                                <div class="col-md-2">
-                                    <time>{{ a_item.horario }}</time>
-                                </div>
-                                <div class="col-md-10">
-                                    <h4>{{ a_item.nome }}</h4>
-                                    <p>{{ a_item.resumo }}</p>
-                                </div>
+                    <div class="col-lg-6 venue-info">
+                        <div class="row justify-content-center">
+                            <div class="col-11 col-lg-8">
+                                <h3>Downtown Conference Center, New York</h3>
+                                <p>Iste nobis eum sapiente sunt enim dolores labore accusantium autem. Cumque beatae
+                                    ipsam.
+                                    Est quae sit
+                                    qui voluptatem corporis velit. Qui maxime accusamus possimus. Consequatur sequi et
+                                    ea
+                                    suscipit enim
+                                    nesciunt quia velit.</p>
                             </div>
-                        {% endfor %}
-
-                    </div>
-                {% endfor %}
-                <!-- End Schdule List -->
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!--==========================
-      Venue Section
-    ============================-->
-    <section id="venue" class="wow fadeInUp">
-
-        <div class="container-fluid">
-
-            <div class="section-header">
-                <h2>Localização</h2>
-                <p>Este foi o local escolhido para a OIAQ 2020</p>
-            </div>
-
-            <div class="row no-gutters">
-                <div class="col-lg-6 venue-map">
-                    <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                            frameborder="0" style="border:0" allowfullscreen></iframe>
-                </div>
-
-                <div class="col-lg-6 venue-info">
-                    <div class="row justify-content-center">
-                        <div class="col-11 col-lg-8">
-                            <h3>Downtown Conference Center, New York</h3>
-                            <p>Iste nobis eum sapiente sunt enim dolores labore accusantium autem. Cumque beatae ipsam.
-                                Est quae sit
-                                qui voluptatem corporis velit. Qui maxime accusamus possimus. Consequatur sequi et ea
-                                suscipit enim
-                                nesciunt quia velit.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!--==========================
-      Hotels Section
-    ============================-->
-
-    <!--==========================
-      Gallery Section
-    ============================-->
-
-    <!--==========================
-      Sponsors Section
-    ============================-->
-    <section id="supporters" class="section-with-bg wow fadeInUp">
-
-        <div class="container">
-            <div class="section-header">
-                <h2>Patrocinadores</h2>
-            </div>
-
-            <div class="row no-gutters supporters-wrap clearfix">
-
-                {% for p in patrocinadores %}
-                    <div class="col-lg-3 col-md-4 col-xs-6">
-                        <div class="supporter-logo">
-                            <a href="{{ p.link }}">
-                                <img src="{{ p.foto.url }}" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!--==========================
+          Hotels Section
+        ============================-->
 
-    <!--==========================
-      Sponsors Section
-    ============================-->
-    <section id="supporters" class="section-with-bg wow fadeInUp">
+        <!--==========================
+          Gallery Section
+        ============================-->
 
-        <div class="container">
-            <div class="section-header">
-                <h2>Realizadores</h2>
-            </div>
+        <!--==========================
+          Sponsors Section
+        ============================-->
+        <section id="supporters" class="section-with-bg wow fadeInUp">
 
-            <div class="row no-gutters supporters-wrap clearfix">
-
-                {% for r in realizadores %}
-                    <div class="col-lg-3 col-md-4 col-xs-6">
-                        <div class="supporter-logo">
-                            <a href="{{ r.link }}">
-                                <img src="{{ r.foto.url }}" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!--==========================
-      Sponsors Section
-    ============================-->
-    <section id="supporters" class="section-with-bg wow fadeInUp">
-
-        <div class="container">
-            <div class="section-header">
-                <h2>Apoiadores</h2>
-            </div>
-
-            <div class="row no-gutters supporters-wrap clearfix">
-
-                {% for a in apoiadores %}
-                    <div class="col-lg-3 col-md-4 col-xs-6">
-                        <div class="supporter-logo">
-                            <a href="{{ a.link }}">
-                                <img src="{{ a.foto.url }}" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!--==========================
-      F.A.Q Section
-    ============================-->
-    <!--==========================
-      Subscribe Section
-    ============================-->
-
-    <!--==========================
-      Buy Ticket Section
-    ============================-->
-
-    <!--==========================
-      Contact Section
-    ============================-->
-    <section id="contact" class="section-bg wow fadeInUp">
-
-        <div class="container">
-
-            <div class="section-header">
-                <h2>Fale conosco</h2>
-                <p>Alguma dúvida? Sugestão? Entre em contato!</p>
-            </div>
-
-            <div class="row contact-info">
-
-                <div class="col-md-4">
-                    <div class="contact-address">
-                        <i class="ion-ios-location-outline"></i>
-                        <h3>Endereço</h3>
-                        <address>Coordenação de Química, UFPI, Teresina</address>
-                    </div>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Patrocinadores</h2>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="contact-phone">
-                        <i class="ion-ios-telephone-outline"></i>
-                        <h3>Telefone</h3>
-                        <p><a href="tel:+155895548855">+55 86 3222-2222</a></p>
-                    </div>
-                </div>
+                <div class="row no-gutters supporters-wrap clearfix">
 
-                <div class="col-md-4">
-                    <div class="contact-email">
-                        <i class="ion-ios-email-outline"></i>
-                        <h3>Email</h3>
-                        <p><a href="mailto:info@example.com">contato@ufpi.edu.br</a></p>
-                    </div>
+                    {% for p in patrocinadores %}
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="supporter-logo">
+                                <a href="{{ p.link }}">
+                                    <img src="{{ p.foto.url }}" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
                 </div>
 
             </div>
 
-            <!--==========================
-              Contact Form
-            ============================-->
-        </div>
-    </section><!-- #contact -->
+        </section>
 
-</main>
+        <!--==========================
+          Sponsors Section
+        ============================-->
+        <section id="supporters" class="section-with-bg wow fadeInUp">
+
+            <div class="container">
+                <div class="section-header">
+                    <h2>Realizadores</h2>
+                </div>
+
+                <div class="row no-gutters supporters-wrap clearfix">
+
+                    {% for r in realizadores %}
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="supporter-logo">
+                                <a href="{{ r.link }}">
+                                    <img src="{{ r.foto.url }}" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!--==========================
+          Sponsors Section
+        ============================-->
+        <section id="supporters" class="section-with-bg wow fadeInUp">
+
+            <div class="container">
+                <div class="section-header">
+                    <h2>Apoiadores</h2>
+                </div>
+
+                <div class="row no-gutters supporters-wrap clearfix">
+
+                    {% for a in apoiadores %}
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="supporter-logo">
+                                <a href="{{ a.link }}">
+                                    <img src="{{ a.foto.url }}" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!--==========================
+          F.A.Q Section
+        ============================-->
+        <!--==========================
+          Subscribe Section
+        ============================-->
+
+        <!--==========================
+          Buy Ticket Section
+        ============================-->
+
+        <!--==========================
+          Contact Section
+        ============================-->
+        <section id="contact" class="section-bg wow fadeInUp">
+
+            <div class="container">
+
+                <div class="section-header">
+                    <h2>Fale conosco</h2>
+                    <p>Alguma dúvida? Sugestão? Entre em contato!</p>
+                </div>
+
+                <div class="row contact-info">
+
+                    <div class="col-md-4">
+                        <div class="contact-address">
+                            <i class="ion-ios-location-outline"></i>
+                            <h3>Endereço</h3>
+                            <address>Coordenação de Química, UFPI, Teresina</address>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="contact-phone">
+                            <i class="ion-ios-telephone-outline"></i>
+                            <h3>Telefone</h3>
+                            <p><a href="tel:+155895548855">+55 86 3222-2222</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="contact-email">
+                            <i class="ion-ios-email-outline"></i>
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@example.com">contato@ufpi.edu.br</a></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--==========================
+                  Contact Form
+                ============================-->
+            </div>
+        </section><!-- #contact -->
+
+    </main>
 
 
-<!--==========================
-  Footer
-============================-->
-<footer id="footer">
-    <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved <br>
-            &trade; Powered by <strong>LASCO - STI UFPI</strong>
-        </div>
-        <div class="credits">
-            Made with <a href="https://bootstrap.com/">Bootstrap</a>
-        </div>
-    </div>
-</footer><!-- #footer -->
-
-<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-
-<!-- JavaScript Libraries -->
-<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-<script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'lib/easing/easing.min.js' %}"></script>
-<script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-<script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-<script src="{% static 'lib/wow/wow.min.js' %}"></script>
-<script src="{% static 'lib/venobox/venobox.min.js' %}"></script>
-<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
-
-<!-- Template Main Javascript File -->
-<script src="{% static 'js/main2.js' %}"></script>
-</body>
-
-</html>
+{% endblock %}

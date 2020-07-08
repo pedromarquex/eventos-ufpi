@@ -3,12 +3,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
+from django.db.utils import IntegrityError
 
 from administrador.models import Administrador
 from organizador.forms import OrganizadorForm
 from organizador.models import Organizador
+from eventos.models import Evento
 
-from .forms import CustomUsernameForm
+from .forms import CustomUsernameForm, EventoForm
 
 
 class NovoOrganizador(View):
@@ -59,7 +61,6 @@ class NovoOrganizador(View):
 class ListarOrganizador(View):
     @method_decorator(login_required)
     def get(self, request):
-        is_admin = None
         template_name = 'administrador/listar_organizadores.html'
 
         full_name = ''
@@ -72,6 +73,7 @@ class ListarOrganizador(View):
             pass
 
         user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
 
         if len(full_name) > 0 and len(username) > 0:
             organizadores = Organizador.objects.filter(
@@ -141,3 +143,141 @@ class EditarOrganizador(View):
             'is_admin': is_admin,
         }
         return render(request, template_name, context)
+
+
+class ListaEventos(View):
+    @method_decorator(login_required)
+    def get(self, request):
+
+        nome = ''
+        onde = ''
+
+        try:
+            nome = request.GET['nome']
+            onde = request.GET['local']
+        except KeyError:
+            pass
+
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+
+        if len(nome) > 0 and len(onde) > 0:
+            eventos = Organizador.objects.filter(
+                nome__icontains=nome,
+                onde__icontains=onde
+            )
+        elif len(nome) > 0:
+            eventos = Evento.objects.filter(nome__icontains=nome)
+        elif len(onde) > 0:
+            eventos = Evento.objects.filter(onde__icontains=onde)
+        else:
+            eventos = Evento.objects.all()
+        template_name = 'administrador/listar_eventos.html'
+        context = {
+            "eventos": eventos,
+            "user": user,
+            "is_admin": is_admin
+        }
+        return render(request, template_name, context)
+
+
+class NovoEvento(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        template_name = 'administrador/novo_evento.html'
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        evento_form = EventoForm()
+        context = {
+            "user": user,
+            "is_admin": is_admin,
+            "evento_form": evento_form
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request):
+        evento_form = EventoForm(request.POST)
+        if evento_form.is_valid():
+            try:
+                evento_form.save()
+                return redirect('administrador:listar-eventos')
+            except IntegrityError:
+                evento_form.add_error('nome', 'Este nome de Evento já está em uso')
+                template_name = 'administrador/novo_evento.html'
+                user = get_object_or_404(Administrador, user=request.user)
+                is_admin = True
+                context = {
+                    'user': user,
+                    'is_admin': is_admin,
+                    'evento_form': evento_form
+                }
+                return render(request, template_name, context)
+        template_name = 'administrador/novo_evento.html'
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        context = {
+            'user': user,
+            'is_admin': is_admin,
+            'evento_form': evento_form
+        }
+        return render(request, template_name, context)
+
+
+class EditarEvento(View):
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        template_name = 'administrador/editar_evento.html'
+        evento = get_object_or_404(Evento, pk=pk)
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        evento_form = EventoForm(instance=evento)
+        context = {
+            "user": user,
+            "is_admin": is_admin,
+            "evento_form": evento_form
+        }
+        return render(request, template_name, context)
+
+    @method_decorator(login_required)
+    def post(self, request, pk):
+        evento = get_object_or_404(Evento, pk=pk)
+        evento_form = EventoForm(request.POST, instance=evento)
+        template_name = 'administrador/editar_evento.html'
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        if evento_form.is_valid():
+            try:
+                evento_form.save()
+                context = {
+                    'user': user,
+                    'is_admin': is_admin,
+                    'evento_form': evento_form,
+                    'success_message': 'Atualizações realizadas com sucesso'
+                }
+                return render(request, template_name, context)
+            except IntegrityError:
+                evento_form.add_error('nome', 'Este nome de Evento já está em uso')
+                context = {
+                    'user': user,
+                    'is_admin': is_admin,
+                    'evento_form': evento_form
+                }
+                return render(request, template_name, context)
+        template_name = 'administrador/editar_evento.html'
+        user = get_object_or_404(Administrador, user=request.user)
+        is_admin = True
+        context = {
+            'user': user,
+            'is_admin': is_admin,
+            'evento_form': evento_form
+        }
+        return render(request, template_name, context)
+
+
+@login_required
+def excluir_evento(request, pk):
+    get_object_or_404(Administrador, user=request.user)
+    evento = get_object_or_404(Evento, pk=pk)
+    evento.delete()
+    return redirect('administrador:listar-eventos')

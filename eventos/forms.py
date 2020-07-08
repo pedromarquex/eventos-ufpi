@@ -30,7 +30,7 @@ class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
         fields = '__all__'
-        exclude = ['dia']
+        exclude = ['dia', 'palestrante']
 
 
 class PalestranteForm(ModelForm):
