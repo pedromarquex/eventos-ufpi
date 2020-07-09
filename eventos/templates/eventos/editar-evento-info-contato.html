@@ -1,5 +1,7 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
+
+{% block title %}Editar | {{ evento.nome }}{% endblock %}
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 100vh;">
         {% if success_message %}
@@ -12,7 +14,6 @@
         <div class="container box" style="max-width: 950px;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento.nome }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
@@ -40,11 +41,8 @@
                     <div class="field-body">
                         <div class="field">
                             {% if evento_form.onde.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.onde class="input is-danger" placeholder="Ex: Walter Pyramid, Long Beach - CA" %}
-                                    <span class="icon is-small is-right is-danger">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </span>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
@@ -55,7 +53,6 @@
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
                             {% endif %}
-                            {#                                <input class="input" type="text" placeholder="Ex: Walter Pyramid, Long Beach - CA">#}
                             </p>
                             {% for error in evento_form.onde.errors %}
                                 <p class="help is-danger">{{ error }}</p>
@@ -64,20 +61,15 @@
                         </div>
                         <div class="field">
                             {% if evento_form.quando.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.quando class="input is-danger" placeholder="Ex: 20 - 25 de Dezembro de 2021" %}
-                                    {#                                <input class="input" type="email" placeholder="Ex: 20 - 25 de Dezembro de 2021">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-clock"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-exclamation-triangle"></i>
                                     </span>
                                 </p>
                             {% else %}
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.quando class="input" placeholder="Ex: 20 - 25 de Dezembro de 2021" %}
-                                    {#                                <input class="input" type="email" placeholder="Ex: 20 - 25 de Dezembro de 2021">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-clock"></i>
                                     </span>
@@ -103,8 +95,6 @@
                                     {% render_field evento_form.sobre class="textarea is-danger" placeholder="Conte o que podemos esperar do evento" %}
                                 {% else %}
                                     {% render_field evento_form.sobre class="textarea" placeholder="Conte o que podemos esperar do evento" %}
-                                    {#                                <textarea class="textarea"#}
-                                    {#                                    placeholder="Conte o que podemos esperar do evento"></textarea>#}
                                 {% endif %}
                             </div>
                             {% for error in evento_form.sobre.errors %}
@@ -125,7 +115,6 @@
                                     <div id="file-js-example" class="file has-name is-danger is-fullwidth">
                                         <label class="file-label">
                                             {% render_field evento_form.banner class="file-input" name="resume" %}
-                                            {#                                        <input class="file-input" type="file" name="resume">#}
                                             <span class="file-cta">
                                             <span class="file-icon">
                                                 <i class="fas fa-upload"></i>
@@ -145,12 +134,10 @@
                                     <div id="file-js-example" class="file has-name is-fullwidth">
                                         <label class="file-label">
                                             {% render_field evento_form.banner class="file-input" name="resume" %}
-                                            {#                                        <input class="file-input" type="file" name="resume">#}
                                             <span class="file-cta">
                                             <span class="file-icon">
                                                 <i class="fas fa-upload"></i>
                                             </span>
-{#                                            <span class="file-label">Selecione</span>#}
                                         </span>
                                             <span class="file-name">
                                             {% if evento.banner %}
@@ -180,20 +167,15 @@
                     <div class="field-body">
                         <div class="field">
                             {% if evento_form.endereco.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.endereco class="input is-danger" placeholder="Coordenação de Letras - CCHL" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: Coordenação de Letras - CCHL">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-map-marker-alt"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-exclamation-triangle"></i>
                                     </span>
                                 </p>
                             {% else %}
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.endereco class="input" placeholder="Coordenação de Letras - CCHL" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: Coordenação de Letras - CCHL">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
@@ -214,20 +196,15 @@
                     <div class="field-body">
                         <div class="field">
                             {% if evento_form.telefone.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
-                                    {% render_field evento_form.telefone class="input is-danger" %}
-                                    {#                                <input class="input" type="text" placeholder="Telefone da Organização">#}
+                                <p class="control is-expanded has-icons-left">
+                                    {% render_field evento_form.telefone class="input is-danger" placeholder="(99) 99999-9999" %}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-phone"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-exclamation-triangle"></i>
                                     </span>
                                 </p>
                             {% else %}
                                 <p class="control is-expanded has-icons-left">
-                                    {% render_field evento_form.telefone class="input" %}
-                                    {#                                <input class="input" type="text" placeholder="Telefone da Organização">#}
+                                    {% render_field evento_form.telefone class="input" placeholder="(99) 99999-9999" %}
                                     <span class="icon is-small is-left">
                                     <i class="fas fa-phone"></i>
                                     </span>
@@ -247,20 +224,15 @@
                     <div class="field-body">
                         <div class="field">
                             {% if evento_form.email.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.email class="input is-danger" placeholder="Ex: contato@ufpi.edu.br" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-exclamation-triangle"></i>
                                     </span>
                                 </p>
                             {% else %}
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.email class="input" placeholder="Ex: contato@ufpi.edu.br" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -279,20 +251,15 @@
                     <div class="field-body">
                         <div class="field">
                             {% if evento_form.instagram.errors %}
-                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.instagram class="input is-danger" placeholder="Ex: instagram" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
                                     <span class="icon is-small is-left">
                                         <i class="fab fa-instagram"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-exclamation-triangle"></i>
                                     </span>
                                 </p>
                             {% else %}
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field evento_form.instagram class="input" placeholder="Ex: instagram" %}
-                                    {#                                <input class="input" type="text" placeholder="Ex: contato@ufpi.edu.br">#}
                                     <span class="icon is-small is-left">
                                         <i class="fab fa-instagram"></i>
                                     </span>
@@ -333,7 +300,7 @@
         }
         document.addEventListener('DOMContentLoaded', () => {
             (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-                $notification = $delete.parentNode;
+                let $notification = $delete.parentNode;
 
                 $delete.addEventListener('click', () => {
                     $notification.parentNode.removeChild($notification);

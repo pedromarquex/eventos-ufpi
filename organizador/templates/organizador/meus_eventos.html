@@ -6,97 +6,6 @@
         <div class="content container" id="main-container">
             <h1 class="title has-text-centered">Eventos de {{ user }}</h1>
             <div class="columns is-multiline">
-                {#                <div class="column is-one-third">#}
-                {#                    <div class="card">#}
-                {#                        <div class="card-image">#}
-                {#                            <a href="#">#}
-                {#                                <figure class="image">#}
-                {#                                    <img src="https://i2.wp.com/www.fc.up.pt/oiaq2019/wp-content/uploads/2019/08/Olimpiada_logotipo.jpg?resize=300%2C251&ssl=1"#}
-                {#                                         alt="Placeholder image" style="height: 180px">#}
-                {#                                </figure>#}
-                {#                            </a>#}
-                {#                        </div>#}
-                {#                        <div class="card-content">#}
-                {#                            <div class="media">#}
-                {#                                <div class="media-content has-text-centered">#}
-                {#                                    <a href="#">#}
-                {#                                        <p class="title is-4">XXIV OIAQ 2020</p>#}
-                {#                                    </a>#}
-                {#                                    <p class="subtitle is-6">@xxivoiaq</p>#}
-                {#                                    <p class="subtitle is-6"><i class="fas fa-map-marker-alt"></i> PORTO - PORTUGAL<br>#}
-                {#                                        <i class="fas fa-clock"></i>#}
-                {#                                        <time datetime="2016-1-1"> 9 Set#}
-                {#                                            2020#}
-                {#                                        </time>#}
-                {#                                    </p>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        </div>#}
-                {#                        <footer class="card-footer">#}
-                {#                            <a href="#" class="card-footer-item">Editar</a>#}
-                {#                        </footer>#}
-                {#                    </div>#}
-                {#                </div>#}
-                {#                <div class="column is-one-third">#}
-                {#                    <div class="card">#}
-                {#                        <div class="card-image">#}
-                {#                            <a href="#">#}
-                {#                                <figure class="image">#}
-                {#                                    <img src="https://images.even3.com.br/N2xRskXREJANWLT_8cRuI2OtFs0=/fit-in/250x250/smart/even3.blob.core.windows.net/logos/AvatarFacebook-ENEEEL.d7b14bd68814424480a6.jpg"#}
-                {#                                         alt="Placeholder image" style="height: 180px;">#}
-                {#                                </figure>#}
-                {#                            </a>#}
-                {#                        </div>#}
-                {#                        <div class="card-content">#}
-                {#                            <div class="media">#}
-                {#                                <div class="media-content has-text-centered">#}
-                {#                                    <a href="#">#}
-                {#                                        <p class="title is-4">XIV ENEEEL</p>#}
-                {#                                    </a>#}
-                {#                                    <p class="subtitle is-6">@xiveneeel</p>#}
-                {#                                    <p class="subtitle is-6"><i class="fas fa-map-marker-alt"></i> UFPA<br>#}
-                {#                                        <i class="fas fa-clock"></i>#}
-                {#                                        <time datetime="2016-1-1"> 16 Dez 2020</time>#}
-                {#                                    </p>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        </div>#}
-                {#                        <footer class="card-footer">#}
-                {#                            <a href="#" class="card-footer-item">Editar</a>#}
-                {#                        </footer>#}
-                {#                    </div>#}
-                {#                </div>#}
-                {#                <div class="column is-one-third">#}
-                {#                    <div class="card">#}
-                {#                        <div class="card-image">#}
-                {#                            <a href="#">#}
-                {#                                <figure class="image">#}
-                {#                                    <img src="https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/s960x960/60912531_420810172043451_5470228828183855104_o.jpg?_nc_cat=107&_nc_oc=AQkRNp5HGQHyM3NyjqCIOCNEjS8o-4UW2gluZmLUtVb3SRzvmbVInTMlStnOtl5vAB8&_nc_ht=scontent.frec10-1.fna&oh=8fb8b0c65a3fc1c693d922798c9a3a8b&oe=5ECDA445"#}
-                {#                                         alt="Placeholder image" style="height: 180px">#}
-                {#                                </figure>#}
-                {#                            </a>#}
-                {#                        </div>#}
-                {#                        <div class="card-content">#}
-                {#                            <div class="media">#}
-                {#                                <div class="media-content has-text-centered">#}
-                {#                                    <a href="#">#}
-                {#                                        <p class="title is-4">ERCAS - ENUCOMPI</p>#}
-                {#                                    </a>#}
-                {#                                    <p class="subtitle is-6">@enucompi</p>#}
-                {#                                    <p class="subtitle is-6"><i class="fas fa-map-marker-alt"></i> Auditório do CCA <br>#}
-                {#                                        <i class="fas fa-clock"></i>#}
-                {#                                        <time datetime="2016-1-1"> 1 Ago#}
-                {#                                            2019#}
-                {#                                        </time>#}
-                {#                                    </p>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        </div>#}
-                {#                        <footer class="card-footer">#}
-                {#                            <a href="#" class="card-footer-item">Editar</a>#}
-                {#                        </footer>#}
-                {#                    </div>#}
-                {#                </div>#}
                 {% if eventos %}
                     {% for evento in eventos %}
                         <div class="column is-one-third">
@@ -122,13 +31,23 @@
                                             {% if evento.instagram %}
                                                 <p class="subtitle is-6">@{{ evento.instagram }}</p>
                                             {% endif %}
-                                            {% if evento.onde and evento.quando %}
-                                                <p class="subtitle is-6"><i
-                                                        class="fas fa-map-marker-alt"></i> {{ evento.onde }}<br>
-                                                    <i class="fas fa-clock"></i>
-                                                    <time datetime="2016-1-1">{{ evento.quando }}</time>
-                                                </p>
-                                            {% endif %}
+                                            <p class="subtitle is-6">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                {% if evento.onde %}
+                                                    <span>{{ evento.onde }}</span>
+                                                {% else %}
+                                                    <span>à definir</span>
+                                                {% endif %}
+                                                <br>
+                                                <i class="fas fa-clock"></i>
+                                                <time>
+                                                    {% if evento.quando %}
+                                                        {{ evento.quando }}
+                                                    {% else %}
+                                                        à definir
+                                                    {% endif %}
+                                                </time>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

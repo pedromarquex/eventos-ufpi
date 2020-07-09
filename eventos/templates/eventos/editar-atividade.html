@@ -1,5 +1,8 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
+
+{% block title %}Editar | {{ evento.nome }}{% endblock %}
+
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         {% if success_message %}
@@ -11,7 +14,6 @@
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento.nome }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
@@ -52,20 +54,15 @@
                         <div class="field-body">
                             <div class="field">
                                 {% if atividade_form.nome.errors %}
-                                    <p class="control is-expanded has-icons-left has-icons-right">
+                                    <p class="control is-expanded has-icons-left">
                                         {% render_field atividade_form.nome class="input is-danger" placeholder="Ex: Credenciamento" %}
-                                        {#                                    <input class="input" type="text" placeholder="Ex: Credenciamento">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-user"></i>
-                                        </span>
-                                        <span class="icon is-small is-right">
-                                            <i class="fas fa-exclamation-triangle"></i>
                                         </span>
                                     </p>
                                 {% else %}
                                     <p class="control is-expanded has-icons-left">
                                         {% render_field atividade_form.nome class="input" placeholder="Ex: Credenciamento" %}
-                                        {#                                    <input class="input" type="text" placeholder="Ex: Credenciamento">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-user"></i>
                                         </span>
@@ -87,7 +84,6 @@
                                 <div class="field">
                                     <p class="control is-expanded has-icons-left">
                                         {% render_field atividade_form.tipo class="input" placeholder="Tipo de Atividade" %}
-                                        {#                                        <input class="input" type="text" placeholder="Tipo de Atividade">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-pen"></i>
                                         </span>
@@ -98,20 +94,15 @@
                             <div class="field is-expanded">
                                 <div class="field">
                                     {% if atividade_form.nome.errors %}
-                                        <p class="control is-expanded has-icons-left has-icons-right">
+                                        <p class="control is-expanded has-icons-left">
                                             {% render_field atividade_form.horario class="input is-danger" placeholder="Horário" %}
-                                            {#                                        <input id="username" class="input" type="text" placeholder="Horário">#}
                                             <span class="icon is-small is-left">
                                                 <i class="fas fa-clock"></i>
-                                            </span>
-                                            <span class="icon is-small is-right">
-                                                <i class="fas fa-exclamation-triangle"></i>
                                             </span>
                                         </p>
                                     {% else %}
                                         <p class="control is-expanded has-icons-left">
                                             {% render_field atividade_form.horario class="input" placeholder="Horário" %}
-                                            {#                                        <input id="username" class="input" type="text" placeholder="Horário">#}
                                             <span class="icon is-small is-left">
                                                 <i class="fas fa-clock"></i>
                                             </span>
@@ -134,8 +125,6 @@
                             <div class="field">
                                 <div class="control">
                                     {% render_field atividade_form.resumo class="textarea" rows=4 placeholder="Pequeno texto descritivo acerca do tema a ser abordado" %}
-                                    {#                                    <textarea class="textarea"#}
-                                    {#                                              placeholder="Pequeno texto descritivo acerca do tema a ser abordado"></textarea>#}
                                 </div>
                             </div>
                         </div>

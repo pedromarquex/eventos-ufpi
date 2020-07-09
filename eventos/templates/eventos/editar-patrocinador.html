@@ -2,6 +2,8 @@
 
 {% load widget_tweaks %}
 
+{% block title %}Editar | {{ evento.nome }}{% endblock %}
+
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         {% if success_message %}
@@ -13,7 +15,6 @@
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
@@ -51,7 +52,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.nome class="input" placeholder="Nome do patrocinador" %}
-                                    {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -68,7 +68,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.link class="input" placeholder="LinkedIn, Facebook, Homepage..." %}
-                                    {#                                    <input class="input" type="url" placeholder="LinkedIn, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-link"></i>
                                     </span>
@@ -87,12 +86,10 @@
                                 <div id="file-js-example" class="file has-name is-fullwidth">
                                     <label class="file-label">
                                         {% render_field p_form.foto class="file-input" name="resume" %}
-                                        {#                                        <input class="file-input" type="file" name="resume">#}
                                         <span class="file-cta">
                                                 <span class="file-icon">
                                                     <i class="fas fa-upload"></i>
                                                 </span>
-{#                                                    <span class="file-label">Selecionar</span>#}
                                             </span>
                                         <span class="file-name">
                                             {% if p.foto %}

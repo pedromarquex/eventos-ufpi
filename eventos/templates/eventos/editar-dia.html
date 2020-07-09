@@ -2,6 +2,8 @@
 
 {% load widget_tweaks %}
 
+{% block title %}Editar | {{ evento.nome }}{% endblock %}
+
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         {% if mensagem_sucesso %}
@@ -13,7 +15,6 @@
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
@@ -55,7 +56,6 @@
                                 {% if dia_form.dia.errors %}
                                     <p class="control is-expanded has-icons-left">
                                         {% render_field dia_form.dia class="input is-danger" placeholder="Ordem nos dias de eventos" %}
-                                        {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-list-ol"></i>
                                         </span>
@@ -66,7 +66,6 @@
                                 {% else %}
                                     <p class="control is-expanded has-icons-left">
                                         {% render_field dia_form.dia class="input" placeholder="Ordem nos dias de eventos" %}
-                                        {#                                    <input class="input" type="text" placeholder="Nome do patrocinador">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-list-ol"></i>
                                         </span>
@@ -83,20 +82,15 @@
                         <div class="field-body">
                             <div class="field">
                                 {% if dia_form.data.errors %}
-                                    <p class="control is-expanded has-icons-left has-icons-right">
+                                    <p class="control is-expanded has-icons-left">
                                         {% render_field dia_form.data class="input is-danger" placeholder="Ex: 27/Dez" %}
-                                        {#                                    <input class="input" type="url" placeholder="LinkedIn, Facebook, Homepage...">#}
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-calendar-alt"></i>
-                                        </span>
-                                        <span class="icon is-small is-right">
-                                            <i class="fas fa-exclamation-triangle"></i>
                                         </span>
                                     </p>
                                 {% else %}
                                     <p class="control is-expanded has-icons-left">
                                         {% render_field dia_form.data class="input" placeholder="Ex: 27/Dez" %}
-                                        {#                                    <input class="input" type="url" placeholder="LinkedIn, Facebook, Homepage...">#}
                                         <span class="icon is-small is-left">
                                         <i class="fas fa-calendar-alt"></i>
                                     </span>

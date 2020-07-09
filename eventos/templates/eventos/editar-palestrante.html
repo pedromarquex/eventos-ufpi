@@ -1,5 +1,8 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
+
+{% block title %}Editar | {{ evento.nome }}{% endblock %}
+
 {% block content %}
     <section class="section has-background-grey-lighter" style="min-height: 90vh;">
         {% if success_message %}
@@ -11,7 +14,6 @@
         <div class="container box" style="max-width: 950px; min-height: 80vh;">
             <h1 class="title has-text-centered has-icons-right is-2">
                 <span>Editar | {{ evento.nome }}</span>
-                <!-- <span class="icon is-large"><i class="fas fa-edit"></i></span> -->
             </h1>
             <div class="tabs is-centered is-boxed">
                 <ul>
@@ -53,7 +55,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.nome class="input" placeholder="Nome do palestrante" %}
-                                    {#                                    <input class="input" type="text" placeholder="Ex: Credenciamento">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -72,12 +73,10 @@
                                 <div id="file-js-example" class="file has-name is-fullwidth">
                                     <label class="file-label">
                                         {% render_field p_form.foto class="file-input" name="resume" %}
-                                        {#                                            <input class="file-input" type="file" name="resume">#}
                                         <span class="file-cta">
                                                 <span class="file-icon">
                                                     <i class="fas fa-upload"></i>
                                                 </span>
-{#                                                <span class="file-label">Selecione</span>#}
                                             </span>
                                         {% if p.foto %}
                                             <span class="file-name">{{ p.foto }}</span>
@@ -99,7 +98,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.instagram type="url" class="input" placeholder="Instagram, Facebook, Homepage..." %}
-                                    {#                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fab fa-instagram"></i>
                                     </span>
@@ -115,7 +113,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.linkedin type="url" class="input" placeholder="Instagram, Facebook, Homepage..." %}
-                                    {#                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fab fa-linkedin"></i>
                                     </span>
@@ -131,7 +128,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.twitter type="url" class="input" placeholder="Instagram, Facebook, Homepage..." %}
-                                    {#                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fab fa-twitter"></i>
                                     </span>
@@ -147,7 +143,6 @@
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
                                     {% render_field p_form.email type="url" class="input" placeholder="Instagram, Facebook, Homepage..." %}
-                                    {#                                    <input class="input" type="url" placeholder="Instagram, Facebook, Homepage...">#}
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -166,9 +161,6 @@
                                 <div class="field">
                                     <div class="control">
                                         {% render_field p_form.resumo class="textarea" placeholder="Pequeno resumo sobre o palestrante" rows="2" %}
-                                        {#                                        <textarea class="textarea"#}
-                                        {#                                                  placeholder="Resumo sobre a apresentação do Palestrante"#}
-                                        {#                                                  rows="2"></textarea>#}
                                     </div>
                                 </div>
                                 <p class="help is-pulled-right">300 caracteres</p>
@@ -183,8 +175,6 @@
                             <div class="field">
                                 <div class="control">
                                     {% render_field p_form.apresentacao class="textarea" placeholder="Texto que apresente o Palestrante de forma completa" %}
-                                    {#                                    <textarea class="textarea"#}
-                                    {#                                              placeholder="Texto que apresente o Palestrante de forma completa"></textarea>#}
                                 </div>
                             </div>
                         </div>

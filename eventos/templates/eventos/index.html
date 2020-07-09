@@ -29,11 +29,25 @@
                                         <a href="{% url 'eventos:evento' slug=evento.slug %}">
                                             <p class="title is-4">{{ evento.nome }}</p>
                                         </a>
-                                        <p class="subtitle is-6">@{{ evento.instagram }}</p>
-                                        <p class="subtitle is-6"><i
-                                                class="fas fa-map-marker-alt"></i>{{ evento.onde }}<br>
+                                        {% if evento.instagram %}
+                                            <p class="subtitle is-6">@{{ evento.instagram }}</p>
+                                        {% endif %}
+                                        <p class="subtitle is-6">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {% if evento.onde %}
+                                                <span>{{ evento.onde }}</span>
+                                            {% else %}
+                                                <span>à definir</span>
+                                            {% endif %}
+                                            <br>
                                             <i class="fas fa-clock"></i>
-                                            <time datetime="2016-1-1">{{ evento.quando }}</time>
+                                            <time>
+                                                {% if evento.quando %}
+                                                    {{ evento.quando }}
+                                                {% else %}
+                                                    à definir
+                                                {% endif %}
+                                            </time>
                                         </p>
                                     </div>
                                 </div>
@@ -43,35 +57,5 @@
                 {% endfor %}
             </div>
         </div>
-        {#        <div class="container" style="margin-bottom: 12px">#}
-        {#            <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">#}
-        {#                <a class="pagination-previous has-icon-left">#}
-        {#                <span class="icon">#}
-        {#                    <i class="fas fa-arrow-left"></i>#}
-        {#                </span>#}
-        {#                    <span>Anterior</span>#}
-        {#                </a>#}
-        {#                </a>#}
-        {#                <a class="pagination-next has-icon-right">#}
-        {#                    <span>Próxima</span>#}
-        {#                    <span class="icon">#}
-        {#                            <i class="fas fa-arrow-right"></i>#}
-        {#                        </span></a>#}
-        {#                <ul class="pagination-list">#}
-        {#                    <li><a class="pagination-link" aria-label="Goto page 45">1</a></li>#}
-        {#                    <li><span class="pagination-ellipsis">&hellip;</span></li>#}
-        {#                    <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>#}
-        {#                    <li>#}
-        {#                        <a class="pagination-link has-background-grey-dark" aria-label="Page 46" aria-current="page">#}
-        {#                            <span style="color: white">46</span>#}
-        {#                        </a>#}
-        {#                    </li>#}
-        {#                    <li><a class="pagination-link" aria-label="Goto page 45">47</a></li>#}
-        {#                    <li><span class="pagination-ellipsis">&hellip;</span></li>#}
-        {#                    <li><a class="pagination-link has-icon-right" aria-label="Goto page 45">96</a>#}
-        {#                    </li>#}
-        {#                </ul>#}
-        {#            </nav>#}
-        {#        </div>#}
     </section>
 {% endblock %}

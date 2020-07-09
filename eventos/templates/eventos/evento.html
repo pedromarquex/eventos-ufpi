@@ -21,10 +21,18 @@ Header
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#speakers">Palestrantes</a></li>
                     <li><a href="#schedule">Cronograma</a></li>
-                    <li><a href="#venue">Localização</a></li>
+                    {#                    <li><a href="#venue">Localização</a></li>#}
                     <!-- <li><a href="#hotels">Hotels</a></li> -->
                     <!-- <li><a href="#gallery">Gallery</a></li> -->
-                    <li><a href="#supporters">Patrocinadores</a></li>
+                    {% if patrocinadores %}
+                        <li><a href="#sponsors">Patrocinadores</a></li>
+                    {% endif %}
+                    {% if realizadores %}
+                        <li><a href="#directors">Realizadores</a></li>
+                    {% endif %}
+                    {% if apoiadores %}
+                        <li><a href="#supporters">Apoiadores</a></li>
+                    {% endif %}
                     <li><a href="#contact">Contato</a></li>
                     <!--           <li class="buy-tickets"><a href="#buy-tickets">Buy Tickets</a></li> -->
                 </ul>
@@ -39,7 +47,13 @@ Header
         <div class="intro-container wow fadeIn">
             <h1 class="mb-4 pb-0">{{ evento.nome }}</h1>
             <!-- <h1 class="mb-4 pb-0">The Annual<br><span>Marketing</span> Conference</h1> -->
-            <p class="mb-4 pb-0">{{ evento.quando }}, {{ evento.onde }}</p>
+            <p class="mb-4 pb-0">
+                {% if evento.onde and evento.quando %}
+                    {{ evento.quando }}, {{ evento.onde }}
+                {% else %}
+                    Local e data disponíveis em breve
+                {% endif %}
+            </p>
             <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
                data-autoplay="true"></a>
             <a href="#about" class="about-btn scrollto">Sobre o Evento</a>
@@ -56,15 +70,33 @@ Header
                 <div class="row">
                     <div class="col-lg-6">
                         <h2>Sobre o evento</h2>
-                        <p>{{ evento.sobre|linebreaks }}</p>
+                        <p>
+                            {% if evento.sobre %}
+                                {{ evento.sobre|linebreaks }}
+                            {% else %}
+                                Em breve
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="col-lg-3">
                         <h3>Onde</h3>
-                        <p>{{ evento.onde }}</p>
+                        <p>
+                            {% if evento.onde %}
+                                {{ evento.onde }}
+                            {% else %}
+                                Em breve
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="col-lg-3">
                         <h3>Quando</h3>
-                        <p>{{ evento.quando }}</p>
+                        <p>
+                            {% if evento.quando %}
+                                {{ evento.quando }}
+                            {% else %}
+                                Em breve
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -112,6 +144,8 @@ Header
                                 </div>
                             </div>
                         </div>
+                    {% empty %}
+                        <p style="margin: 0 auto;">Em breve</p>
                     {% endfor %}
                 </div>
             </div>
@@ -164,6 +198,8 @@ Header
                                         <p>{{ a_item.resumo }}</p>
                                     </div>
                                 </div>
+                            {% empty %}
+                                <p style="text-align: center;">Em breve</p>
                             {% endfor %}
 
                         </div>
@@ -179,7 +215,7 @@ Header
         <!--==========================
           Venue Section
         ============================-->
-        <section id="venue" class="wow fadeInUp">
+        <section id="venue" style="display: none" class="wow fadeInUp">
 
             <div class="container-fluid">
 
@@ -226,86 +262,92 @@ Header
         <!--==========================
           Sponsors Section
         ============================-->
-        <section id="supporters" class="section-with-bg wow fadeInUp">
+        {% if patrocinadores %}
+            <section id="sponsors" class="section-with-bg wow fadeInUp">
 
-            <div class="container">
-                <div class="section-header">
-                    <h2>Patrocinadores</h2>
-                </div>
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Patrocinadores</h2>
+                    </div>
 
-                <div class="row no-gutters supporters-wrap clearfix">
+                    <div class="row no-gutters supporters-wrap clearfix">
 
-                    {% for p in patrocinadores %}
-                        <div class="col-lg-3 col-md-4 col-xs-6">
-                            <div class="supporter-logo">
-                                <a href="{{ p.link }}">
-                                    <img src="{{ p.foto.url }}" class="img-fluid" alt="">
-                                </a>
+                        {% for p in patrocinadores %}
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="supporter-logo">
+                                    <a href="{{ p.link }}">
+                                        <img src="{{ p.foto.url }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        </section>
+            </section>
+        {% endif %}
 
         <!--==========================
           Sponsors Section
         ============================-->
-        <section id="supporters" class="section-with-bg wow fadeInUp">
+        {% if realizadores %}
+            <section id="directors" class="section-with-bg wow fadeInUp">
 
-            <div class="container">
-                <div class="section-header">
-                    <h2>Realizadores</h2>
-                </div>
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Realizadores</h2>
+                    </div>
 
-                <div class="row no-gutters supporters-wrap clearfix">
+                    <div class="row no-gutters supporters-wrap clearfix">
 
-                    {% for r in realizadores %}
-                        <div class="col-lg-3 col-md-4 col-xs-6">
-                            <div class="supporter-logo">
-                                <a href="{{ r.link }}">
-                                    <img src="{{ r.foto.url }}" class="img-fluid" alt="">
-                                </a>
+                        {% for r in realizadores %}
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="supporter-logo">
+                                    <a href="{{ r.link }}">
+                                        <img src="{{ r.foto.url }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        </section>
+            </section>
+        {% endif %}
 
         <!--==========================
           Sponsors Section
         ============================-->
-        <section id="supporters" class="section-with-bg wow fadeInUp">
+        {% if apoiadores %}
+            <section id="supporters" class="section-with-bg wow fadeInUp">
 
-            <div class="container">
-                <div class="section-header">
-                    <h2>Apoiadores</h2>
-                </div>
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Apoiadores</h2>
+                    </div>
 
-                <div class="row no-gutters supporters-wrap clearfix">
+                    <div class="row no-gutters supporters-wrap clearfix">
 
-                    {% for a in apoiadores %}
-                        <div class="col-lg-3 col-md-4 col-xs-6">
-                            <div class="supporter-logo">
-                                <a href="{{ a.link }}">
-                                    <img src="{{ a.foto.url }}" class="img-fluid" alt="">
-                                </a>
+                        {% for a in apoiadores %}
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="supporter-logo">
+                                    <a href="{{ a.link }}">
+                                        <img src="{{ a.foto.url }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        </section>
+            </section>
+        {% endif %}
 
         <!--==========================
           F.A.Q Section
@@ -336,7 +378,13 @@ Header
                         <div class="contact-address">
                             <i class="ion-ios-location-outline"></i>
                             <h3>Endereço</h3>
-                            <address>Coordenação de Química, UFPI, Teresina</address>
+                            <address>
+                                {% if evento.endereco %}
+                                    {{ evento.endereco }}
+                                {% else %}
+                                    Em breve
+                                {% endif %}
+                            </address>
                         </div>
                     </div>
 
@@ -344,7 +392,11 @@ Header
                         <div class="contact-phone">
                             <i class="ion-ios-telephone-outline"></i>
                             <h3>Telefone</h3>
-                            <p><a href="tel:+155895548855">+55 86 3222-2222</a></p>
+                            {% if evento.telefone %}
+                                <p>{{ evento.telefone }}</p>
+                            {% else %}
+                                <p>Em breve</p>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -352,7 +404,11 @@ Header
                         <div class="contact-email">
                             <i class="ion-ios-email-outline"></i>
                             <h3>Email</h3>
-                            <p><a href="mailto:info@example.com">contato@ufpi.edu.br</a></p>
+                            {% if evento.email %}
+                                <p><a href="mailto:{{ evento.email }}">contato@ufpi.edu.br</a></p>
+                            {% else %}
+                                <p>Em breve</p>
+                            {% endif %}
                         </div>
                     </div>
 
