@@ -19,7 +19,9 @@ Header
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="#intro">Home</a></li>
                     <li><a href="#about">Sobre</a></li>
-                    <li><a href="#speakers">Palestrantes</a></li>
+                    {% if palestrantes %}
+                        <li><a href="#speakers">Palestrantes</a></li>
+                    {% endif %}
                     <li><a href="#schedule">Cronograma</a></li>
                     {#                    <li><a href="#venue">Localização</a></li>#}
                     <!-- <li><a href="#hotels">Hotels</a></li> -->
@@ -54,8 +56,10 @@ Header
                     Local e data disponíveis em breve
                 {% endif %}
             </p>
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
-               data-autoplay="true"></a>
+            {% if evento.video %}
+                <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
+                   data-autoplay="true"></a>
+            {% endif %}
             <a href="#about" class="about-btn scrollto">Sobre o Evento</a>
         </div>
     </section>
@@ -105,52 +109,54 @@ Header
         <!--==========================
           Speakers Section
         ============================-->
-        <section id="speakers" class="wow fadeInUp">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Palestrantes</h2>
-                    <p>Confira alguns palestrantes do nosso evento</p>
-                </div>
+        {% if palestrantes %}
+            <section id="speakers" class="wow fadeInUp">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Palestrantes</h2>
+                        <p>Confira alguns palestrantes do nosso evento</p>
+                    </div>
 
-                <div class="row">
-                    {% for p in palestrantes %}
-                        <div class="col-lg-4 col-md-6">
-                            <div class="speaker">
-                                <img
-                                        src="{{ p.foto.url }}"
-                                        alt="Speaker"
-                                        class="img-fluid"
-                                        style="width: 100%;min-height: 300px; max-height: 250px; object-fit: cover"
-                                >
-                                <div class="details">
-                                    <h3>
-                                        <a href="{% url 'eventos:palestrante-detalhe' slug=evento.slug pk=p.pk %}">{{ p.nome }}</a>
-                                    </h3>
-                                    <p>{{ p.resumo }}</p>
-                                    <div class="social">
-                                        {% if p.twitter %}
-                                            <a href="{{ p.twitter }}"><i class="fa fa-twitter"></i></a>
-                                        {% endif %}
-                                        {% if p.instagram %}
-                                            <a href="{{ p.instagram }}"><i class="fa fa-instagram"></i></a>
-                                        {% endif %}
-                                        {% if p.linkedin %}
-                                            <a href="{{ p.linkedin }}"><i class="fa fa-linkedin"></i></a>
-                                        {% endif %}
-                                        {% if p.email %}
-                                            <a href="mailto:{{ p.email }}"><i class="fa fa-envelope"></i></a>
-                                        {% endif %}
+                    <div class="row">
+                        {% for p in palestrantes %}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="speaker">
+                                    <img
+                                            src="{{ p.foto.url }}"
+                                            alt="Speaker"
+                                            class="img-fluid"
+                                            style="width: 100%;min-height: 300px; max-height: 250px; object-fit: cover"
+                                    >
+                                    <div class="details">
+                                        <h3>
+                                            <a href="{% url 'eventos:palestrante-detalhe' slug=evento.slug pk=p.pk %}">{{ p.nome }}</a>
+                                        </h3>
+                                        <p>{{ p.resumo }}</p>
+                                        <div class="social">
+                                            {% if p.twitter %}
+                                                <a href="{{ p.twitter }}"><i class="fa fa-twitter"></i></a>
+                                            {% endif %}
+                                            {% if p.instagram %}
+                                                <a href="{{ p.instagram }}"><i class="fa fa-instagram"></i></a>
+                                            {% endif %}
+                                            {% if p.linkedin %}
+                                                <a href="{{ p.linkedin }}"><i class="fa fa-linkedin"></i></a>
+                                            {% endif %}
+                                            {% if p.email %}
+                                                <a href="mailto:{{ p.email }}"><i class="fa fa-envelope"></i></a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% empty %}
-                        <p style="margin: 0 auto;">Em breve</p>
-                    {% endfor %}
+                        {% empty %}
+                            <p style="margin: 0 auto;">Em breve</p>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
 
-        </section>
+            </section>
+        {% endif %}
 
         <!--==========================
           Schedule Section
