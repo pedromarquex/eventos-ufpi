@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,9 +26,6 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=False)
-
-if not DEBUG:
-    import django_heroku
 
 ALLOWED_HOSTS = ['localhost', 'eventos-ufpi.herokuapp.com']
 
@@ -133,5 +131,4 @@ try:
 except ImportError:
     pass
 
-if not DEBUG:
     django_heroku.settings(locals())
