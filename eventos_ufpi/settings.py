@@ -29,7 +29,7 @@ DEBUG = config('DEBUG', cast=bool, default=False)
 if not DEBUG:
     import django_heroku
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.100.34', '192.168.100.101']
+ALLOWED_HOSTS = ['localhost', 'eventos-ufpi.herokuapp.com']
 
 
 # Application definition
