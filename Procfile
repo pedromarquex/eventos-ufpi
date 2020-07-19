@@ -1,0 +1,1 @@
+web: gunicorn eventos_ufpi.wsgi
